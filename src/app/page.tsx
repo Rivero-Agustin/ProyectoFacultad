@@ -36,6 +36,7 @@ const Home = () => {
           sint vitae, at eaque similique impedit. Nihil aspernatur corrupti
           voluptas, nemo laboriosam beatae unde natus?
         </p>
+        <p>Agregado para git</p>
         <h1>Datos de Arduino: {arduinoData}</h1>
         <button onClick={sendToArduino}>Enviar a Arduino</button>
       </div>
