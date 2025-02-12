@@ -2,6 +2,15 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 
 ## Getting Started
 
+Ejecutar los comandos:
+
+npm i
+
+(si no deja el anterior, primero ejecutar)
+Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
+
+npm run dev
+
 First, run the development server:
 
 ```bash
