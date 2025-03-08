@@ -2,18 +2,18 @@ import Button from "@/components/Button";
 import { sendToArduino } from "@/utils/arduino";
 import Image from "next/image";
 
-export default function Tierra() {
+export default function Directo() {
   return (
     <>
       <div className="flex flex-col items-center">
-        <h1>Resistencia de Tierra de Protección</h1>
+        <h1>Corriente de Fuga del Equipo - Método Directo</h1>
         <Image
-          src="/circuito_tierra.PNG"
-          alt="Circuito de Tierra de Protección"
+          src="/circuito_fugaequipo_directo.JPG"
+          alt="Circuito del método directo para Corriente de Fuga del Equipo"
           width={600}
           height={600}
         />
-        <Button sendToArduino={sendToArduino} sendParam="6">
+        <Button sendToArduino={sendToArduino} sendParam="1">
           Comenzar
         </Button>
       </div>
