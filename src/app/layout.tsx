@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import BackButton from "@/components/BackButton";
+import { DataProvider } from "../context/DataContext";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -33,8 +34,7 @@ export default function RootLayout({
             <BackButton></BackButton>
             <h1 className="text-center"> Mediciones Eléctricas IEC 62353 </h1>
           </div>
-
-          {children}
+          <DataProvider>{children}</DataProvider>
         </body>
       </>
     </html>
