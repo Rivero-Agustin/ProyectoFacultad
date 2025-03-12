@@ -1,7 +1,7 @@
 const { app, BrowserWindow, ipcMain } = require("electron");
 const path = require("path");
 const SerialPort = require("serialport").SerialPort;
-const { ReadlineParser } = require("@serialport/parser-readline"); // Corrección aquí
+const { ReadlineParser } = require("@serialport/parser-readline");
 
 let mainWindow;
 let port;
@@ -24,9 +24,10 @@ app.whenReady().then(() => {
 
   const parser = port.pipe(new ReadlineParser({ delimiter: "\n" })); // Parser corregido
 
+  // Envia el mensaje recibido al renderer mediante el canal
   parser.on("data", (data) => {
     console.log("Datos recibidos de Arduino:", data);
-    mainWindow.webContents.send("arduino-data", data);
+    mainWindow.webContents.send("arduino-data", data); // Linea que envia al renderer mediante el canal arduino-data
   });
 });
 

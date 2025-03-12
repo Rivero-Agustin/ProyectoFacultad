@@ -17,7 +17,7 @@ void loop() {
           case 1:
             Serial.println("Método directo - Corriente de fuga del equipo"); // Responde a la aplicación con el mensaje recibido
 
-            Serial.println("Realizando medición....");
+            Serial.println(0);
             delay(5000);
             resultado = random();
             Serial.println(resultado);
@@ -42,7 +42,7 @@ void loop() {
 
           case 6:
             Serial.println("Tierra de protección");
-            Serial.println("Realizando medición....");
+            Serial.println("Midiendo");
             delay(5000);
             resultado = random();
             Serial.println(resultado);
