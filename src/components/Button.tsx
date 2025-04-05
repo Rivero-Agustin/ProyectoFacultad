@@ -1,7 +1,13 @@
 "use client"; // Es necesario porque usa useRouter
 
+//Este boton permite enviar datos a un arduino,
+// renderiza un link si hay un href, sino renderiza un button
+// y si hay una unidad, agrega un boton de medicion al hacer click
+
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useState, useEffect } from "react";
+import Measurement from "./Measurement";
 
 interface ButtonProps {
   href?: string;
@@ -9,6 +15,7 @@ interface ButtonProps {
   className?: string;
   sendToArduino?: (data: string) => void;
   sendParam?: string;
+  unidad?: string;
   [key: string]: any; // Para otras props como onClick, id, etc.
 }
 
@@ -18,13 +25,26 @@ const Button = ({
   className = "",
   sendToArduino,
   sendParam = "",
+  unidad = "",
   ...props
 }: ButtonProps) => {
   const router = useRouter();
+  const [mostrar, setMostrar] = useState(false);
+  const [deshabilitado, setDeshabilitado] = useState(false);
+  const [finMedicion, setFinMedicion] = useState(false);
+
+  useEffect(() => {
+    if (finMedicion) {
+      setDeshabilitado(false); // Reactivar el botón cuando el hijo lo indique
+    }
+  }, [finMedicion]);
 
   const handleClick = (
     e: React.MouseEvent<HTMLButtonElement | HTMLAnchorElement>
   ) => {
+    unidad != "" && setMostrar(true); // Si hay unidad, muestra el botón de la medición
+    setDeshabilitado(true); // Deshabilita el botón cuando hace click
+
     if (sendToArduino) {
       sendToArduino(sendParam);
     }
@@ -37,7 +57,11 @@ const Button = ({
     }
   };
 
-  const classes = `bg-cyan-700 p-2 m-5 hover:bg-cyan-900 rounded-lg text-xl transition ${className}`;
+  const classes = ` p-2 m-5  rounded-lg text-xl transition text-center ${
+    deshabilitado
+      ? "bg-gray-400 cursor-not-allowed"
+      : "bg-cyan-700 hover:bg-cyan-900"
+  } ${className}`;
 
   if (href) {
     return (
@@ -48,9 +72,19 @@ const Button = ({
   }
   // si hay un href, renderiza un link, sino un button
   return (
-    <button className={classes} onClick={handleClick} {...props}>
-      {children}
-    </button>
+    <>
+      <button
+        className={classes}
+        onClick={handleClick}
+        disabled={deshabilitado}
+        {...props}
+      >
+        {children}
+      </button>
+      {mostrar && (
+        <Measurement unidad={unidad} setFinMedicion={setFinMedicion} />
+      )}
+    </>
   );
 };
 

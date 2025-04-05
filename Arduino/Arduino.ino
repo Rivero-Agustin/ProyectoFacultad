@@ -11,13 +11,12 @@ void loop() {
         
         int comando = data.toInt();
 
-        //char data = Serial.read();
+        //char comando = Serial.read();
 
         switch(comando) {
           case 1:
             Serial.println("Método directo - Corriente de fuga del equipo"); // Responde a la aplicación con el mensaje recibido
-
-            Serial.println(0);
+            Serial.println("Midiendo");  //Midiendo
             delay(5000);
             resultado = random();
             Serial.println(resultado);
@@ -26,23 +25,39 @@ void loop() {
 
           case 2:
             Serial.println("Método alternativo - Corriente de fuga del equipo");
+            Serial.println("Midiendo");  //Midiendo
+            delay(5000);
+            resultado = random();
+            Serial.println(resultado);
             break;
             
           case 3:
             Serial.println("Método directo - Corriente de fuga de partes aplicables");
+            Serial.println("Midiendo");  //Midiendo
+            delay(5000);
+            resultado = random();
+            Serial.println(resultado);
             break;
 
           case 4:
             Serial.println("Método alternativo - Corriente de fuga de partes aplicables");
+            Serial.println("Midiendo");  //Midiendo
+            delay(5000);
+            resultado = random();
+            Serial.println(resultado);
             break;
 
           case 5:
             Serial.println("Resistencia de aislamiento");
+            Serial.println("Midiendo");  //Midiendo
+            delay(5000);
+            resultado = random();
+            Serial.println(resultado);
             break;
 
           case 6:
             Serial.println("Tierra de protección");
-            Serial.println("Midiendo");
+            Serial.println("Midiendo");    //Midiendo
             delay(5000);
             resultado = random();
             Serial.println(resultado);
@@ -54,7 +69,7 @@ void loop() {
 
         }
     }else{
-//      Serial.println("Sensor: " + String(random(10, 100)));   // Simula el envío de datos desde Arduino cada 2 segundos
+      //Serial.println("Sensor: " + String(random(10, 100)));   // Simula el envío de datos desde Arduino cada 2 segundos
     }
 
 

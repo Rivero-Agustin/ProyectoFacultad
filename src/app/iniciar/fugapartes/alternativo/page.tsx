@@ -1,4 +1,5 @@
 import Button from "@/components/Button";
+import MeasurementButton from "@/components/Measurement";
 import { sendToArduino } from "@/utils/arduino";
 import Image from "next/image";
 
@@ -13,9 +14,11 @@ export default function Alternativo() {
           width={600}
           height={600}
         />
-        <Button sendToArduino={sendToArduino} sendParam="4">
+        <Button sendToArduino={sendToArduino} sendParam="4" unidad="mA">
           Comenzar
         </Button>
+
+        {/* <MeasurementButton unidad="mA" /> */}
       </div>
     </>
   );

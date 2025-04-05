@@ -20,7 +20,7 @@ app.whenReady().then(() => {
 
   mainWindow.loadURL("http://localhost:3000");
 
-  port = new SerialPort({ path: "COM4", baudRate: 9600 }); // Verifica el puerto correcto
+  port = new SerialPort({ path: "COM9", baudRate: 9600 }); // Verifica el puerto correcto
 
   const parser = port.pipe(new ReadlineParser({ delimiter: "\n" })); // Parser corregido
 
