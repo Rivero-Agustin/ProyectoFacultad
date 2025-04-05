@@ -16,8 +16,6 @@ export default function Directo() {
         <ButtonArduino sendToArduino={sendToArduino} sendParam="1" unidad="mA">
           Comenzar
         </ButtonArduino>
-
-        {/* <MeasurementButton unidad="mA" /> */}
       </div>
     </>
   );

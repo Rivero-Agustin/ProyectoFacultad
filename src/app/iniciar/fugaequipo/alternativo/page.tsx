@@ -16,8 +16,6 @@ export default function Alternativo() {
         <ButtonArduino sendToArduino={sendToArduino} sendParam="2" unidad="mA">
           Comenzar
         </ButtonArduino>
-
-        {/* <MeasurementButton unidad="mA" /> */}
       </div>
     </>
   );

@@ -1,5 +1,4 @@
 import ButtonArduino from "@/components/ButtonArduino";
-import MeasurementButton from "@/components/Measurement";
 import { sendToArduino } from "@/utils/arduino";
 import Image from "next/image";
 
@@ -29,8 +28,6 @@ export default function Aislamiento() {
         <ButtonArduino sendToArduino={sendToArduino} sendParam="5" unidad="Ω">
           Comenzar
         </ButtonArduino>
-
-        {/* <MeasurementButton unidad="Ω" /> */}
       </div>
     </>
   );

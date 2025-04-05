@@ -3,9 +3,7 @@
 import ButtonArduino from "@/components/ButtonArduino";
 import { sendToArduino } from "@/utils/arduino";
 import Image from "next/image";
-import AddMeasurementButton from "@/components/AddMeasurementButton";
 import GeneratePDFButton from "@/components/GeneratePDFButton";
-import MeasurementButton from "@/components/Measurement";
 
 export default function Tierra() {
   return (
@@ -21,7 +19,6 @@ export default function Tierra() {
         <ButtonArduino sendToArduino={sendToArduino} sendParam="6" unidad="Ω">
           Realizar medición
         </ButtonArduino>
-        {/* <AddMeasurementButton /> */}
         {/* <GeneratePDFButton /> */}
       </div>
     </>
