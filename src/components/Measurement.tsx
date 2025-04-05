@@ -1,60 +1,65 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import SaveMeasurementButton from "./SaveMeasurementButton";
 
 type Props = {
-  unidad?: string;
-  setFinMedicion: (condicion: boolean) => void;
+  unidad: string;
+  setMedicionTerminada: (condicion: boolean) => void;
+  type: string;
 };
 
-export default function Measurement({ unidad, setFinMedicion }: Props) {
+export default function Measurement({
+  unidad,
+  setMedicionTerminada,
+  type,
+}: Props) {
   const [arduinoData, setArduinoData] = useState("");
-  //let midiendo = false;
 
   useEffect(() => {
-    if (arduinoData.trim() != "Midiendo") {
-      setFinMedicion(true); // Notifica al padre que debe reactivar el botón
+    const valor = arduinoData.trim();
+    if (valor && valor !== "Midiendo") {
+      setMedicionTerminada(true);
     }
-  }, [setFinMedicion]);
+  }, [arduinoData, setMedicionTerminada]);
 
   useEffect(() => {
+    let removeListener: (() => void) | undefined;
+
     if (window.electron) {
-      window.electron.onArduinoData((data) => {
+      const listener = (data: string) => {
         setArduinoData(data);
-      });
+      };
+      window.electron.onArduinoData(listener);
+
+      // Simula una función de limpieza (si implementaste "removeListener" en tu preload.js)
+      removeListener = () => {
+        window.electron.removeArduinoDataListener?.(listener);
+      };
     }
 
     return () => {
-      if (window.electron) {
-        window.electron.onArduinoData(() => {}); // Limpia el listener al desmontar
-      }
+      removeListener?.();
     };
   }, []);
-
-  // if (arduinoData.length == 2) {
-  //   midiendo = true;
-  // } else {
-  //   midiendo = false;
-  // }
-
-  // return arduinoData.length == 2 ? (
-  //   <p className="text-white text-xl bg-red-600 p-2 rounded">
-  //     Realizando medición...
-  //   </p>
-  // ) : (
-  //   <p className="text-green-600 text-xl">Resultado: {arduinoData} Ω</p>
-  // );
 
   return arduinoData.trim() == "Midiendo" ? (
     <p className="text-white text-xl bg-red-600 p-2 rounded">
       Realizando medición...
     </p>
   ) : (
-    <p className="text-white text-xl">
-      Resultado:{" "}
-      <span className="text-green-600 font-bold">
-        {arduinoData} {unidad}
-      </span>
-    </p>
+    <>
+      <p className="text-white text-xl">
+        Resultado:{" "}
+        <span className="text-green-600 font-bold">
+          {arduinoData} {unidad}
+        </span>
+      </p>
+      <SaveMeasurementButton
+        saveValue={arduinoData}
+        unit={unidad}
+        type={type}
+      ></SaveMeasurementButton>
+    </>
   );
 }

@@ -2,7 +2,9 @@
 
 import { useEffect, useState } from "react";
 import { sendToArduino } from "@/utils/arduino";
-import Button from "@/components/Button";
+// import Button from "@/components/ButtonArduino";
+import Button from "next/link";
+import { AppLink } from "@/components/AppLink";
 
 const Home = () => {
   const [arduinoData, setArduinoData] = useState("");
@@ -31,15 +33,15 @@ const Home = () => {
           sint vitae, at eaque similique impedit. Nihil aspernatur corrupti
           voluptas, nemo laboriosam beatae unde natus?
         </p>
-        <h1>Datos de Arduino: {arduinoData}</h1>
+        {/* <h1>Datos de Arduino: {arduinoData}</h1>
         <Button sendToArduino={sendToArduino} sendParam="hola">
           Enviar a Arduino
-        </Button>
+        </Button> */}
       </div>
       <div className="flex flex-col items-center">
-        <Button className="" href="/iniciar">
+        <AppLink className="" href="/iniciar">
           Iniciar Medición
-        </Button>
+        </AppLink>
       </div>
     </>
   );

@@ -56,7 +56,7 @@ void loop() {
             break;
 
           case 6:
-            Serial.println("Tierra de protección");
+            //Serial.println("Tierra de protección");
             Serial.println("Midiendo");    //Midiendo
             delay(5000);
             resultado = random();

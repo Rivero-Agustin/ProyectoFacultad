@@ -1,19 +1,22 @@
-import Button from "@/components/Button";
-import { sendToArduino } from "@/utils/arduino";
+import { AppLink } from "@/components/AppLink";
 
 export default function Iniciar() {
   return (
     <>
       <h2 className="text-center">Seleccione la medición a realizar</h2>
       <div className="flex flex-col mx-20">
-        <Button href="/iniciar/fugaequipo">Corriente de fuga del equipo</Button>
-        <Button href="/iniciar/fugapartes">
+        <AppLink href="/iniciar/fugaequipo">
+          Corriente de fuga del equipo
+        </AppLink>
+        <AppLink href="/iniciar/fugapartes">
           Corriente de fuga de partes aplicables
-        </Button>
-        <Button href="/iniciar/aislamiento">Resistencia de aislamiento</Button>
-        <Button href="/iniciar/tierra">
+        </AppLink>
+        <AppLink href="/iniciar/aislamiento">
+          Resistencia de aislamiento
+        </AppLink>
+        <AppLink href="/iniciar/tierra">
           Resistencia de tierra de protección
-        </Button>
+        </AppLink>
       </div>
     </>
   );

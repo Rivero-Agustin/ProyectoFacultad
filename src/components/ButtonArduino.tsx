@@ -9,7 +9,7 @@ import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 import Measurement from "./Measurement";
 
-interface ButtonProps {
+interface ButtonArduinoProps {
   href?: string;
   children: React.ReactNode;
   className?: string;
@@ -19,7 +19,7 @@ interface ButtonProps {
   [key: string]: any; // Para otras props como onClick, id, etc.
 }
 
-const Button = ({
+const ButtonArduino = ({
   href,
   children,
   className = "",
@@ -27,17 +27,18 @@ const Button = ({
   sendParam = "",
   unidad = "",
   ...props
-}: ButtonProps) => {
+}: ButtonArduinoProps) => {
   const router = useRouter();
   const [mostrar, setMostrar] = useState(false);
   const [deshabilitado, setDeshabilitado] = useState(false);
-  const [finMedicion, setFinMedicion] = useState(false);
+  const [medicionTerminada, setMedicionTerminada] = useState(false);
 
   useEffect(() => {
-    if (finMedicion) {
+    if (medicionTerminada) {
       setDeshabilitado(false); // Reactivar el botón cuando el hijo lo indique
+      setMedicionTerminada(false); // Dejarlo listo para la próxima medición
     }
-  }, [finMedicion]);
+  }, [medicionTerminada]);
 
   const handleClick = (
     e: React.MouseEvent<HTMLButtonElement | HTMLAnchorElement>
@@ -57,7 +58,7 @@ const Button = ({
     }
   };
 
-  const classes = ` p-2 m-5  rounded-lg text-xl transition text-center ${
+  const classes = ` p-2 m-5 rounded-lg text-xl transition text-center ${
     deshabilitado
       ? "bg-gray-400 cursor-not-allowed"
       : "bg-cyan-700 hover:bg-cyan-900"
@@ -70,7 +71,7 @@ const Button = ({
       </Link>
     );
   }
-  // si hay un href, renderiza un link, sino un button
+  // si hay un href, renderiza un link, sino un button:
   return (
     <>
       <button
@@ -82,10 +83,14 @@ const Button = ({
         {children}
       </button>
       {mostrar && (
-        <Measurement unidad={unidad} setFinMedicion={setFinMedicion} />
+        <Measurement
+          unidad={unidad}
+          setMedicionTerminada={setMedicionTerminada}
+          type={sendParam} // Agregar el tipo de medición
+        />
       )}
     </>
   );
 };
 
-export default Button;
+export default ButtonArduino;

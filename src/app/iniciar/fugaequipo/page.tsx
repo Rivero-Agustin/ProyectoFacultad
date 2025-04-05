@@ -1,4 +1,4 @@
-import Button from "@/components/Button";
+import { AppLink } from "@/components/AppLink";
 
 export default function Fugaequipo() {
   return (
@@ -6,10 +6,10 @@ export default function Fugaequipo() {
       <div className="flex flex-col items-center">
         <h1 className="mb-5">Corriente de Fuga del Equipo</h1>
         <div>
-          <Button href="/iniciar/fugaequipo/directo">Método Directo</Button>
-          <Button href="/iniciar/fugaequipo/alternativo">
+          <AppLink href="/iniciar/fugaequipo/directo">Método Directo</AppLink>
+          <AppLink href="/iniciar/fugaequipo/alternativo">
             Método Alternativo
-          </Button>
+          </AppLink>
         </div>
       </div>
     </>

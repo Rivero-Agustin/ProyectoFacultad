@@ -2,8 +2,9 @@
 import React, { createContext, useState, useContext, ReactNode } from "react";
 
 interface Measurement {
-  timestamp: number;
   value: number;
+  unit: string;
+  type: string; // Tipo de medición
 }
 
 interface DataContextProps {

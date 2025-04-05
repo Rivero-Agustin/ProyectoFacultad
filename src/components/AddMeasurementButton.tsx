@@ -10,7 +10,7 @@ const AddMeasurementButton = () => {
   const handleAddMeasurement = () => {
     const value = parseFloat(valueMeasured); //Convierte el valor ingresado en numero
     if (!isNaN(value)) {
-      addMeasurement({ timestamp: Date.now(), value });
+      addMeasurement({ timestamp: Date.now(), value, unit });
       setValue(""); // Limpiar el input después de agregar
     } else {
       alert("Ingrese un número válido.");
@@ -19,13 +19,6 @@ const AddMeasurementButton = () => {
 
   return (
     <div className="flex flex-col items-center gap-2">
-      <input
-        type="number"
-        value={valueMeasured}
-        onChange={(e) => setValue(e.target.value)}
-        placeholder="Ingrese valor"
-        className="border p-2 rounded-lg text-black"
-      />
       <button
         onClick={handleAddMeasurement}
         className="bg-blue-500 text-white p-2 rounded-lg hover:bg-blue-700"

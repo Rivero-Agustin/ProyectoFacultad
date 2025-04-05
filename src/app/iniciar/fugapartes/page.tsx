@@ -1,4 +1,4 @@
-import Button from "@/components/Button";
+import { AppLink } from "@/components/AppLink";
 
 export default function Fugapartes() {
   return (
@@ -6,10 +6,10 @@ export default function Fugapartes() {
       <div className="flex flex-col items-center">
         <h1 className="mb-5">Corriente de Fuga de las partes aplicables</h1>
         <div>
-          <Button href="/iniciar/fugapartes/directo">Método Directo</Button>
-          <Button href="/iniciar/fugapartes/alternativo">
+          <AppLink href="/iniciar/fugapartes/directo">Método Directo</AppLink>
+          <AppLink href="/iniciar/fugapartes/alternativo">
             Método Alternativo
-          </Button>
+          </AppLink>
         </div>
       </div>
     </>
