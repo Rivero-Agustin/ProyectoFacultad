@@ -86,7 +86,7 @@ const ButtonArduino = ({
         <Measurement
           unidad={unidad}
           setMedicionTerminada={setMedicionTerminada}
-          type={sendParam} // Agregar el tipo de medición
+          type={parseInt(sendParam)} // Agregar el tipo de medición
         />
       )}
     </>

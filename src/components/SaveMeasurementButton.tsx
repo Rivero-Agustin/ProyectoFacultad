@@ -4,11 +4,12 @@ import React from "react";
 import { useState } from "react";
 import { useDataContext } from "@/context/DataContext"; // Ajusta la ruta según tu estructura
 import { AppButton } from "./AppButton";
+import EstructuraMediciones from "./EstructuraMediciones";
 
 type SaveMeasurementButtonProps = {
   saveValue: string; // Valor a guardar
   unit: string; // Unidad de medida
-  type: string; // Tipo de medición
+  type: number; // Tipo de medición
 };
 
 export default function SaveMeasurementButton({
@@ -21,22 +22,22 @@ export default function SaveMeasurementButton({
   let tipoMedicion;
 
   switch (type) {
-    case "1":
+    case 1:
       tipoMedicion = "Corriente de fuga del equipo - Método directo";
       break;
-    case "2":
+    case 2:
       tipoMedicion = "Corriente de fuga del equipo - Método alternativo";
       break;
-    case "3":
+    case 3:
       tipoMedicion = "Corriente de partes aplicables - Método directo";
       break;
-    case "4":
+    case 4:
       tipoMedicion = "Corriente de partes aplicables - Método alternativo";
       break;
-    case "5":
+    case 5:
       tipoMedicion = "Resistencia de aislamiento";
       break;
-    case "6":
+    case 6:
       tipoMedicion = "Resistencia de tierra de protección";
       break;
     default:
@@ -51,6 +52,7 @@ export default function SaveMeasurementButton({
         value,
         unit,
         type: tipoMedicion,
+        indexType: type, // Agregar el índice del tipo de medición
       }); // Agregar la medición al contexto
     }
   };
@@ -63,20 +65,7 @@ export default function SaveMeasurementButton({
       >
         Guardar
       </button>
-      <div className="mt-6">
-        <h2 className="text-lg font-bold">Mediciones</h2>
-        {measurements.length > 0 ? (
-          <ul>
-            {measurements.map((m, index) => (
-              <li key={index}>
-                {m.type} -{m.value.toFixed(2)} {m.unit}
-              </li>
-            ))}
-          </ul>
-        ) : (
-          <p>No hay mediciones aún.</p>
-        )}
-      </div>
+      <EstructuraMediciones></EstructuraMediciones>
     </>
   );
 }

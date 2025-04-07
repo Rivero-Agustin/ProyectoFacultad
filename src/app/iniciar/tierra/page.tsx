@@ -19,7 +19,6 @@ export default function Tierra() {
         <ButtonArduino sendToArduino={sendToArduino} sendParam="6" unidad="Ω">
           Realizar medición
         </ButtonArduino>
-        {/* <GeneratePDFButton /> */}
       </div>
     </>
   );

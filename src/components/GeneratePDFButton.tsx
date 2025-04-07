@@ -19,14 +19,9 @@ const GeneratePDFButton = () => {
     doc.setFontSize(18);
     doc.text("Informe de Mediciones", 20, 20);
 
-    const tableColumn = ["Fecha", "Hora", "Valor"];
+    const tableColumn = ["Indice", "Medición", "Valor"];
     const tableRows = measurements.map((m) => {
-      const date = new Date(m.timestamp);
-      return [
-        date.toLocaleDateString(),
-        date.toLocaleTimeString(),
-        m.value.toFixed(2) + " Ω",
-      ];
+      return [m.indexType, m.type, m.value.toFixed(2) + m.unit];
     });
 
     autoTable(doc, {

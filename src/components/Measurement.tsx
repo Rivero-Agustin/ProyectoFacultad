@@ -6,7 +6,7 @@ import SaveMeasurementButton from "./SaveMeasurementButton";
 type Props = {
   unidad: string;
   setMedicionTerminada: (condicion: boolean) => void;
-  type: string;
+  type: number;
 };
 
 export default function Measurement({

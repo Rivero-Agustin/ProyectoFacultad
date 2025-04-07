@@ -5,6 +5,7 @@ interface Measurement {
   value: number;
   unit: string;
   type: string; // Tipo de medición
+  indexType: number; // Indice del tipo de medición
 }
 
 interface DataContextProps {
