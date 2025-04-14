@@ -19,7 +19,7 @@ export const AppButton: React.FC<AppButtonProps> = ({
   rel,
   ...props
 }) => {
-  const classes = "p-2 m-5 rounded-lg text-xl transition text-center";
+  const classes = "p-2 m-2 rounded-lg text-xl transition text-center";
   const variants = {
     default: "bg-cyan-700 hover:bg-cyan-900",
     ghost: "bg-gray-700 hover:bg-cyan-900",

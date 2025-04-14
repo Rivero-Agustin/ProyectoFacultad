@@ -1,12 +1,14 @@
 "use client";
 import { AppLink } from "@/components/AppLink";
+import Card from "@/components/Card";
 import EstructuraMediciones from "@/components/EstructuraMediciones";
 import GeneratePDFButton from "@/components/GeneratePDFButton";
 import MedicionRealizada from "@/components/MedicionRealizada";
 import { useDataContext } from "@/context/DataContext";
+import { formatearFecha } from "@/utils/formatearFecha";
 
 export default function Iniciar() {
-  const { measurements } = useDataContext(); // Función del contexto
+  const { measurements, datosEnsayo } = useDataContext(); // Función del contexto
 
   let medicionesRealizadas = [false, false, false, false, false, false]; // Array para verificar si la medición fue realizada o no
 
@@ -17,7 +19,12 @@ export default function Iniciar() {
 
   return (
     <>
-      <h2 className="text-center">Seleccione la medición a realizar</h2>
+      <div className="grid grid-cols-3 gap-2 mx-2">
+        <Card title="Dispositivo" info={datosEnsayo.dispositivo}></Card>
+        <Card title="Técnico laboratorista" info={datosEnsayo.nombre}></Card>
+        <Card title="Fecha" info={formatearFecha(datosEnsayo.fecha)}></Card>
+      </div>
+      <h2 className="text-center mt-2">Seleccione la medición a realizar</h2>
       <div className="grid grid-cols-[1fr_auto] mx-20">
         <div className="contents">
           <AppLink className="w-full" href="/iniciar/fugaequipo">

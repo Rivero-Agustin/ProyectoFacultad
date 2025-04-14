@@ -68,37 +68,52 @@ const Home = () => {
         </Button> */}
       </div>
 
-      <div className="flex flex-col gap-4 mx-20 bg-slate-500 p-4 rounded-lg">
-        <h1 className="font-bold">Ingrese los siguientes datos</h1>
+      <div className="mx-20 bg-slate-500 rounded-lg p-4">
         <form
           action="/iniciar"
           onSubmit={handleSubmit}
-          className="grid grid-cols-3 gap-4 "
+          className="grid grid-cols-3 gap-4"
         >
-          <input
-            type="text"
-            name="dispositivo"
-            value={formData.dispositivo}
-            onChange={handleChange}
-            placeholder="Dispositivo"
-            className="p-2 border text-black rounded"
-          />
-          <input
-            type="text"
-            name="nombre"
-            value={formData.nombre}
-            onChange={handleChange}
-            placeholder="Nombre y apellido"
-            className="p-2 border text-black rounded"
-          />
-          <input
-            type="date"
-            name="fecha"
-            value={formData.fecha}
-            onChange={handleChange}
-            className="p-2 border text-black rounded"
-            // defaultValue={new Date().toISOString().split("T")[0]} // Establece la fecha actual como valor por defecto
-          />
+          <legend className="text-xl text-center col-span-3">
+            Ingrese los siguientes datos
+          </legend>
+          <div className="col-span-1">
+            <label htmlFor="dispositivo">Dispositivo</label>
+            <input
+              type="text"
+              name="dispositivo"
+              id="dispositivo"
+              value={formData.dispositivo}
+              onChange={handleChange}
+              placeholder="Dispositivo"
+              className="p-2 border text-black rounded w-full h-10"
+            />
+          </div>
+          <div className="col-span-1">
+            <label htmlFor="nombre">Técnico laboratorista</label>
+            <input
+              type="text"
+              name="nombre"
+              id="nombre"
+              value={formData.nombre}
+              onChange={handleChange}
+              placeholder="Nombre y apellido"
+              className="p-2 border text-black rounded w-full h-10"
+            />
+          </div>
+          <div className="col-span-1">
+            <label htmlFor="fecha">Fecha</label>
+            <input
+              type="date"
+              name="fecha"
+              id="fecha"
+              value={formData.fecha}
+              onChange={handleChange}
+              className="p-2 border text-black rounded w-full h-10"
+              // defaultValue={new Date().toISOString().split("T")[0]} // Establece la fecha actual como valor por defecto
+            />
+          </div>
+
           <AppButton
             type="submit"
             className="col-span-3 mx-auto border-2 border-black"
