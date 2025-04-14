@@ -1,12 +1,17 @@
 "use client";
 import React from "react";
 import { useDataContext } from "@/context/DataContext"; // Ajusta la ruta según tu estructura
+import { parseISO, format } from "date-fns";
 
 export default function EstructuraMediciones() {
-  const { measurements } = useDataContext(); // Función del contexto
+  const { measurements, datosEnsayo } = useDataContext(); // Función del contexto
   return (
     <>
       <div className="mt-6">
+        <p>{datosEnsayo.dispositivo}</p>
+        <p>{datosEnsayo.nombre}</p>
+        <p>{format(parseISO(datosEnsayo.fecha), "dd/MM/yyyy")}</p>
+
         <h2 className="text-lg font-bold">Mediciones</h2>
         {measurements.length > 0 ? (
           <ul>

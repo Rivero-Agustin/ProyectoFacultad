@@ -16,8 +16,14 @@ interface ButtonArduinoProps {
   sendToArduino?: (data: string) => void;
   sendParam?: string;
   unidad?: string;
+  repetir?: boolean; // Permite cambiar el texto del boton a "Repetir medición" si es true
+  setMostrarMedicion: (mostrar: boolean) => void; // Función para cambiar el estado de mostrarMedicion
+  deshabilitado: boolean; // Prop para deshabilitar el botón
+  setDeshabilitado: (deshabilitado: boolean) => void; // Función para cambiar el estado de deshabilitado
   [key: string]: any; // Para otras props como onClick, id, etc.
 }
+
+let bandera = false; // Bandera para verificar si la medición fue realizada
 
 const ButtonArduino = ({
   href,
@@ -26,25 +32,19 @@ const ButtonArduino = ({
   sendToArduino,
   sendParam = "",
   unidad = "",
+  repetir = false,
+  setMostrarMedicion,
+  deshabilitado,
+  setDeshabilitado,
   ...props
 }: ButtonArduinoProps) => {
   const router = useRouter();
-  const [mostrar, setMostrar] = useState(false);
-  const [deshabilitado, setDeshabilitado] = useState(false);
-  const [medicionTerminada, setMedicionTerminada] = useState(false);
-
-  useEffect(() => {
-    if (medicionTerminada) {
-      setDeshabilitado(false); // Reactivar el botón cuando el hijo lo indique
-      setMedicionTerminada(false); // Dejarlo listo para la próxima medición
-    }
-  }, [medicionTerminada]);
 
   const handleClick = (
     e: React.MouseEvent<HTMLButtonElement | HTMLAnchorElement>
   ) => {
-    unidad != "" && setMostrar(true); // Si hay unidad, muestra el botón de la medición
-    setDeshabilitado(true); // Deshabilita el botón cuando hace click
+    setMostrarMedicion(true); // Muestra el componente de medición
+    setDeshabilitado(true); //Deshabilita el boton al hacer click, porque se esta realizando la medicion
 
     if (sendToArduino) {
       sendToArduino(sendParam);
@@ -80,15 +80,8 @@ const ButtonArduino = ({
         disabled={deshabilitado}
         {...props}
       >
-        {children}
+        {repetir ? "Repetir medición" : children}
       </button>
-      {mostrar && (
-        <Measurement
-          unidad={unidad}
-          setMedicionTerminada={setMedicionTerminada}
-          type={parseInt(sendParam)} // Agregar el tipo de medición
-        />
-      )}
     </>
   );
 };

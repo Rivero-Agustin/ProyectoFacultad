@@ -9,6 +9,7 @@ type AppButtonProps = {
   className?: string;
   target?: "_blank" | "_self";
   rel?: string;
+  [key: string]: any; // Para otras props como onClick, id, etc.
 };
 
 export const AppButton: React.FC<AppButtonProps> = ({
@@ -16,6 +17,7 @@ export const AppButton: React.FC<AppButtonProps> = ({
   variant = "default",
   className,
   rel,
+  ...props
 }) => {
   const classes = "p-2 m-5 rounded-lg text-xl transition text-center";
   const variants = {
@@ -29,6 +31,7 @@ export const AppButton: React.FC<AppButtonProps> = ({
     <button
       rel={rel}
       className={`${classes} ${variants[variant]} ${className}`}
+      {...props}
     >
       {children}
     </button>

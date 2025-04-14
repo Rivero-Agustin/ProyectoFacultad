@@ -1,18 +1,26 @@
 "use client";
 import React, { createContext, useState, useContext, ReactNode } from "react";
 
-interface Measurement {
+type Measurement = {
   value: number;
   unit: string;
   type: string; // Tipo de medición
   indexType: number; // Indice del tipo de medición
-}
+};
 
-interface DataContextProps {
+type DatosEnsayo = {
+  dispositivo: string; // Dispositivo
+  nombre: string; //Nombre del tecnico que realiza la medicion
+  fecha: string;
+};
+
+type DataContextProps = {
   measurements: Measurement[];
   addMeasurement: (measurement: Measurement) => void;
   clearMeasurements: () => void;
-}
+  datosEnsayo: DatosEnsayo; // Datos del ensayo
+  setDatosEnsayo: (datos: DatosEnsayo) => void; // Función para establecer los datos del ensayo
+};
 
 const DataContext = createContext<DataContextProps | undefined>(undefined);
 
@@ -20,10 +28,17 @@ const DataContext = createContext<DataContextProps | undefined>(undefined);
 
 export const DataProvider = ({ children }: { children: ReactNode }) => {
   const [measurements, setMeasurements] = useState<Measurement[]>([]);
+  const [datosEnsayo, setDatosEnsayo] = useState<DatosEnsayo>({
+    dispositivo: "",
+    nombre: "",
+    fecha: "",
+  }); // Estado para almacenar los datos del ensayo
 
   // Función para agregar una nueva medición al array
   const addMeasurement = (measurement: Measurement) => {
-    setMeasurements((prev) => [...prev, measurement]);
+    setMeasurements(
+      (prev) => [...prev, measurement].sort((a, b) => a.indexType - b.indexType) // Ordena las mediciones por el índice del tipo de medición
+    );
   };
 
   // Función para reiniciar o limpiar las mediciones almacenadas
@@ -33,7 +48,13 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
 
   return (
     <DataContext.Provider
-      value={{ measurements, addMeasurement, clearMeasurements }}
+      value={{
+        measurements,
+        addMeasurement,
+        clearMeasurements,
+        datosEnsayo,
+        setDatosEnsayo,
+      }}
     >
       {children}
     </DataContext.Provider>

@@ -1,9 +1,7 @@
-"use client";
-
 import ButtonArduino from "@/components/ButtonArduino";
+import MeasurementFlowContainer from "@/components/MeasurementFlowContainer";
 import { sendToArduino } from "@/utils/arduino";
 import Image from "next/image";
-import GeneratePDFButton from "@/components/GeneratePDFButton";
 
 export default function Tierra() {
   return (
@@ -16,9 +14,7 @@ export default function Tierra() {
           width={600}
           height={600}
         />
-        <ButtonArduino sendToArduino={sendToArduino} sendParam="6" unidad="Ω">
-          Realizar medición
-        </ButtonArduino>
+        <MeasurementFlowContainer unidad="Ω" sendParam="6" />
       </div>
     </>
   );

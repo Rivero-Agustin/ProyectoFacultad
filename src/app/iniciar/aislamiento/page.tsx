@@ -1,4 +1,5 @@
 import ButtonArduino from "@/components/ButtonArduino";
+import MeasurementFlowContainer from "@/components/MeasurementFlowContainer";
 import { sendToArduino } from "@/utils/arduino";
 import Image from "next/image";
 
@@ -25,9 +26,7 @@ export default function Aislamiento() {
           width={600}
           height={600}
         />
-        <ButtonArduino sendToArduino={sendToArduino} sendParam="5" unidad="Ω">
-          Comenzar
-        </ButtonArduino>
+        <MeasurementFlowContainer unidad="mA" sendParam="5" />
       </div>
     </>
   );

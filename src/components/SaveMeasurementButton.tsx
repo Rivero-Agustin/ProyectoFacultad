@@ -2,20 +2,23 @@
 
 import React from "react";
 import { useState } from "react";
-import { useDataContext } from "@/context/DataContext"; // Ajusta la ruta según tu estructura
-import { AppButton } from "./AppButton";
+import { useDataContext } from "@/context/DataContext";
 import EstructuraMediciones from "./EstructuraMediciones";
 
 type SaveMeasurementButtonProps = {
   saveValue: string; // Valor a guardar
   unit: string; // Unidad de medida
   type: number; // Tipo de medición
+  setIsOpen: (isOpen: boolean) => void; // Función para abrir el popup
+  [key: string]: any; // Para otras props como onClick, id, etc.
 };
 
 export default function SaveMeasurementButton({
   saveValue,
   unit,
   type,
+  setIsOpen,
+  ...props
 }: SaveMeasurementButtonProps) {
   const { addMeasurement, measurements } = useDataContext(); // Función del contexto
 
@@ -47,13 +50,19 @@ export default function SaveMeasurementButton({
 
   const handleAddMeasurement = () => {
     const value = parseFloat(saveValue); //Convierte el valor ingresado en numero
-    if (!isNaN(value)) {
-      addMeasurement({
-        value,
-        unit,
-        type: tipoMedicion,
-        indexType: type, // Agregar el índice del tipo de medición
-      }); // Agregar la medición al contexto
+
+    if (measurements.some((e) => e.indexType == type)) {
+      setIsOpen(true); // Abre el popup si la medicion ya se ha guardado
+    } else {
+      if (!isNaN(value)) {
+        addMeasurement({
+          // Agregar la medición al contexto
+          value,
+          unit,
+          type: tipoMedicion,
+          indexType: type, // Agregar el índice del tipo de medición
+        });
+      }
     }
   };
 
@@ -62,6 +71,7 @@ export default function SaveMeasurementButton({
       <button
         className="p-2 m-5 rounded-lg text-xl transition text-center bg-cyan-700 hover:bg-cyan-900"
         onClick={handleAddMeasurement}
+        {...props}
       >
         Guardar
       </button>

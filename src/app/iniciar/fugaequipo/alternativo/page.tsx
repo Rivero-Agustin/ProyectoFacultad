@@ -1,4 +1,5 @@
 import ButtonArduino from "@/components/ButtonArduino";
+import MeasurementFlowContainer from "@/components/MeasurementFlowContainer";
 import { sendToArduino } from "@/utils/arduino";
 import Image from "next/image";
 
@@ -13,9 +14,7 @@ export default function Alternativo() {
           width={600}
           height={600}
         />
-        <ButtonArduino sendToArduino={sendToArduino} sendParam="2" unidad="mA">
-          Comenzar
-        </ButtonArduino>
+        <MeasurementFlowContainer unidad="mA" sendParam="2" />
       </div>
     </>
   );

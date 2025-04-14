@@ -4,30 +4,41 @@ import { useState } from "react";
 import { jsPDF } from "jspdf";
 import autoTable from "jspdf-autotable";
 import { useDataContext } from "@/context/DataContext";
+import { parseISO, format } from "date-fns";
+import CustomModal from "@/components/CustomModal"; // Asegúrate de que la ruta sea correcta
 
 const GeneratePDFButton = () => {
-  const { measurements } = useDataContext();
+  const { measurements, datosEnsayo } = useDataContext();
   const [pdfUrl, setPdfUrl] = useState<string | null>(null);
+  const [showModal, setShowModal] = useState(false);
 
   const generatePDF = () => {
     if (measurements.length === 0) {
-      alert("No hay datos para generar el PDF");
+      setShowModal(true);
       return;
     }
 
     const doc = new jsPDF();
     doc.setFontSize(18);
-    doc.text("Informe de Mediciones", 20, 20);
+    doc.text("Informe de Mediciones Eléctricas - IEC 62353", 20, 20);
+    doc.setFontSize(12);
+    doc.text("Dispositivo medido: " + datosEnsayo.dispositivo, 20, 30);
+    doc.text("Realizado por: " + datosEnsayo.nombre, 20, 35);
+    doc.text(
+      "Fecha: " + format(parseISO(datosEnsayo.fecha), "dd/MM/yyyy"),
+      20,
+      40
+    );
 
-    const tableColumn = ["Indice", "Medición", "Valor"];
+    const tableColumn = ["Medición", "Valor"];
     const tableRows = measurements.map((m) => {
-      return [m.indexType, m.type, m.value.toFixed(2) + m.unit];
+      return [m.type, m.value.toFixed(2) + " " + m.unit];
     });
 
     autoTable(doc, {
       head: [tableColumn],
       body: tableRows,
-      startY: 30,
+      startY: 50,
     });
 
     // Convertir a Blob y generar URL para previsualización
@@ -44,11 +55,19 @@ const GeneratePDFButton = () => {
       >
         Generar PDF
       </button>
+      <CustomModal
+        isOpen={showModal}
+        onClose={() => setShowModal(false)}
+        title="Error"
+        message="No se han guardado mediciones"
+      ></CustomModal>
 
       {pdfUrl && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
           <div className="bg-white p-4 rounded-lg shadow-lg w-3/4 h-3/4 flex flex-col">
-            <h2 className="text-xl font-bold mb-4">Vista Previa del PDF</h2>
+            <h2 className="text-xl font-bold mb-4 text-gray-900">
+              Vista previa del PDF
+            </h2>
             <iframe src={pdfUrl} className="flex-1 w-full"></iframe>
             <div className="flex justify-between mt-4">
               <button
