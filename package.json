@@ -10,12 +10,11 @@
   },
   "dependencies": {
     "@heroicons/react": "^2.2.0",
+    "@react-pdf/renderer": "^4.3.0",
     "concurrently": "^9.1.2",
     "cross-env": "^7.0.3",
     "date-fns": "^4.1.0",
     "electron": "^34.0.2",
-    "jspdf": "^3.0.0",
-    "jspdf-autotable": "^5.0.2",
     "next": "15.1.6",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",

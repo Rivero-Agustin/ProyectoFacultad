@@ -68,14 +68,14 @@ const Home = () => {
         </Button> */}
       </div>
 
-      <div className="mx-20 bg-slate-500 rounded-lg p-4">
+      <div className="mx-20 bg-gray-700 rounded-lg p-4">
         <form
           action="/iniciar"
           onSubmit={handleSubmit}
           className="grid grid-cols-3 gap-4"
         >
           <legend className="text-xl text-center col-span-3">
-            Ingrese los siguientes datos
+            Ingrese los siguientes datos para comenzar con el ensayo
           </legend>
           <div className="col-span-1">
             <label htmlFor="dispositivo">Dispositivo</label>

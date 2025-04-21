@@ -1,11 +1,13 @@
 "use client";
 
 import { useRouter, usePathname } from "next/navigation";
+import { useBackButton } from "@/context/BackButtonContext";
 import { ArrowLeftIcon } from "@heroicons/react/24/solid";
 
 const BackButton = () => {
   const router = useRouter();
   const pathname = usePathname();
+  const { onBack } = useBackButton();
 
   // No mostrar el botón en la página principal
   if (pathname === "/") {
@@ -13,10 +15,17 @@ const BackButton = () => {
   }
 
   const handleBack = () => {
-    if (window.history.length > 1) {
-      router.back();
+    // Si esta la funcion onBack, la ejecuta, sino:
+    // Si hay un historial de navegación, vuelve a la página anterior
+    // Si no, redirige a la página principal
+    if (onBack) {
+      onBack();
     } else {
-      router.push("/");
+      if (window.history.length > 1) {
+        router.back();
+      } else {
+        router.push("/");
+      }
     }
   };
 

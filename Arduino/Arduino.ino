@@ -15,7 +15,7 @@ void loop() {
 
         switch(comando) {
           case 1:
-            Serial.println("Método directo - Corriente de fuga del equipo"); // Responde a la aplicación con el mensaje recibido
+            //Serial.println("Método directo - Corriente de fuga del equipo"); // Responde a la aplicación con el mensaje recibido
             Serial.println("Midiendo");  //Midiendo
             delay(5000);
             resultado = random();
@@ -24,7 +24,7 @@ void loop() {
             break; 
 
           case 2:
-            Serial.println("Método alternativo - Corriente de fuga del equipo");
+            //Serial.println("Método alternativo - Corriente de fuga del equipo");
             Serial.println("Midiendo");  //Midiendo
             delay(5000);
             resultado = random();
@@ -32,7 +32,7 @@ void loop() {
             break;
             
           case 3:
-            Serial.println("Método directo - Corriente de fuga de partes aplicables");
+            //Serial.println("Método directo - Corriente de fuga de partes aplicables");
             Serial.println("Midiendo");  //Midiendo
             delay(5000);
             resultado = random();
@@ -40,7 +40,7 @@ void loop() {
             break;
 
           case 4:
-            Serial.println("Método alternativo - Corriente de fuga de partes aplicables");
+            //Serial.println("Método alternativo - Corriente de fuga de partes aplicables");
             Serial.println("Midiendo");  //Midiendo
             delay(5000);
             resultado = random();
@@ -48,7 +48,7 @@ void loop() {
             break;
 
           case 5:
-            Serial.println("Resistencia de aislamiento");
+            //Serial.println("Resistencia de aislamiento");
             Serial.println("Midiendo");  //Midiendo
             delay(5000);
             resultado = random();
@@ -58,7 +58,7 @@ void loop() {
           case 6:
             //Serial.println("Tierra de protección");
             Serial.println("Midiendo");    //Midiendo
-            delay(5000);
+            delay(1000);
             resultado = random();
             Serial.println(resultado);
             break;

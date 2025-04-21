@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import BackButton from "@/components/BackButton";
 import { DataProvider } from "../context/DataContext";
+import { BackButtonProvider } from "@/context/BackButtonContext";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -30,11 +31,13 @@ export default function RootLayout({
         <body
           className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         >
-          <div className="text-4xl text-white bg-cyan-900 m-1 p-3 text-center rounded relative">
-            <BackButton></BackButton>
-            <h1 className="text-center"> Mediciones Eléctricas IEC 62353 </h1>
-          </div>
-          <DataProvider>{children}</DataProvider>
+          <BackButtonProvider>
+            <div className="text-4xl text-white bg-cyan-900 m-1 p-3 text-center rounded relative">
+              <BackButton></BackButton>
+              <h1 className="text-center"> Mediciones Eléctricas IEC 62353 </h1>
+            </div>
+            <DataProvider>{children}</DataProvider>
+          </BackButtonProvider>
         </body>
       </>
     </html>

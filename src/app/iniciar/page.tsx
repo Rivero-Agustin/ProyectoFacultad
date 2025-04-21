@@ -4,21 +4,51 @@ import Card from "@/components/Card";
 import EstructuraMediciones from "@/components/EstructuraMediciones";
 import GeneratePDFButton from "@/components/GeneratePDFButton";
 import MedicionRealizada from "@/components/MedicionRealizada";
+import { useEffect, useState } from "react";
+import { useBackButton } from "@/context/BackButtonContext";
 import { useDataContext } from "@/context/DataContext";
 import { formatearFecha } from "@/utils/formatearFecha";
+import PopupPerderDatos from "@/components/PopupPerderDatos";
 
 export default function Iniciar() {
   const { measurements, datosEnsayo } = useDataContext(); // Función del contexto
+  const { setOnBack } = useBackButton();
+  const [showModal, setShowModal] = useState(false);
 
   let medicionesRealizadas = [false, false, false, false, false, false]; // Array para verificar si la medición fue realizada o no
-
   //Actualiza el array de mediciones ya realizadas
   measurements.forEach((element) => {
     medicionesRealizadas[element.indexType] = true;
   });
 
+  // Funcion para BackButton, si hay mediciones relizadas, abre el popup
+  useEffect(() => {
+    setOnBack(() => () => {
+      if (medicionesRealizadas.some((m) => m) === true) {
+        setShowModal(true); // Abre el popup ya que se pueden borrar mediciones
+      } else {
+        window.history.back();
+      }
+    });
+
+    return () => setOnBack(undefined); // Limpia la función al salir
+  }, [setOnBack]);
+
   return (
     <>
+      <PopupPerderDatos
+        isOpen={showModal}
+        onRequestClose={() => setShowModal(false)}
+      >
+        <div>
+          <h2 className="mt-2 text-2xl font-bold text-black">
+            Si vuelve atrás se perderan las mediciones ya realizadas
+          </h2>
+          <p className="mt-4 text-black text-center">
+            Está seguro que desea continuar?
+          </p>
+        </div>
+      </PopupPerderDatos>
       <div className="grid grid-cols-3 gap-2 mx-2">
         <Card title="Dispositivo" info={datosEnsayo.dispositivo}></Card>
         <Card title="Técnico laboratorista" info={datosEnsayo.nombre}></Card>
