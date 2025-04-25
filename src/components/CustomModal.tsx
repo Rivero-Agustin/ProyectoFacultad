@@ -35,11 +35,11 @@ export default function CustomModal({
       isOpen={isOpen}
       onRequestClose={onClose}
       contentLabel="Mensaje"
-      className={`bg-white p-6 rounded-lg shadow-lg w-96 mx-auto mt-40 outline-none text-black ${className}`}
+      className={`bg-white p-6 rounded-lg shadow-lg w-96 mx-auto mt-30 outline-none text-black ${className}`}
       overlayClassName="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50"
       {...props}
     >
-      <h2 className="text-xl font-bold mb-4">{title}</h2>
+      <h2 className="text-xl font-bold mb-4 text-center">{title}</h2>
       <p className="mb-4">{message}</p>
       <div className="flex justify-end">
         <button

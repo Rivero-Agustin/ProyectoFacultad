@@ -12,6 +12,7 @@ type DatosEnsayo = {
   dispositivo: string; // Dispositivo
   nombre: string; //Nombre del tecnico que realiza la medicion
   fecha: string;
+  comentario: string; // Comentario adicional del ensayo
 };
 
 type DataContextProps = {
@@ -19,7 +20,7 @@ type DataContextProps = {
   addMeasurement: (measurement: Measurement) => void;
   clearMeasurements: () => void;
   datosEnsayo: DatosEnsayo; // Datos del ensayo
-  setDatosEnsayo: (datos: DatosEnsayo) => void; // Función para establecer los datos del ensayo
+  setDatosEnsayo: (datos: Partial<DatosEnsayo>) => void; // Función para establecer los datos del ensayo
 };
 
 const DataContext = createContext<DataContextProps | undefined>(undefined);
@@ -32,6 +33,7 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
     dispositivo: "",
     nombre: "",
     fecha: "",
+    comentario: "",
   }); // Estado para almacenar los datos del ensayo
 
   // Función para agregar una nueva medición al array
@@ -53,7 +55,9 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
         addMeasurement,
         clearMeasurements,
         datosEnsayo,
-        setDatosEnsayo,
+        setDatosEnsayo: (datos) =>
+          setDatosEnsayo((prev) => ({ ...prev, ...datos })), // Actualiza los datos del ensayo, manteniendo los valores existentes
+        // Permite actualizar solo algunos campos de los datos del ensayo
       }}
     >
       {children}

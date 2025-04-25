@@ -12,6 +12,7 @@ export default function EstructuraMediciones() {
         <p>{datosEnsayo.dispositivo}</p>
         <p>{datosEnsayo.nombre}</p>
         <p>{formatearFecha(datosEnsayo.fecha)}</p>
+        <p>{datosEnsayo.comentario}</p>
 
         <h2 className="text-lg font-bold">Mediciones</h2>
         {measurements.length > 0 ? (

@@ -4,6 +4,7 @@ import React from "react";
 import { useState } from "react";
 import { useDataContext } from "@/context/DataContext";
 import EstructuraMediciones from "./EstructuraMediciones";
+import { toast } from "sonner";
 
 type SaveMeasurementButtonProps = {
   saveValue: string; // Valor a guardar
@@ -62,6 +63,7 @@ export default function SaveMeasurementButton({
           type: tipoMedicion,
           indexType: type, // Agregar el índice del tipo de medición
         });
+        toast.success("Medición guardada correctamente"); // Notificacion de éxito
       }
     }
   };

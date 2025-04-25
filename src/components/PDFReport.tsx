@@ -98,6 +98,7 @@ type Props = {
     dispositivo: string;
     nombre: string;
     fecha: string;
+    comentario: string;
   };
   measurements: {
     type: string;
@@ -139,14 +140,12 @@ const PDFReport = ({ datosEnsayo, measurements }: Props) => {
             </View>
           ))}
         </View>
-
-        <Text style={styles.comentariosTitle}>Comentarios del ensayo</Text>
-        <Text style={styles.comentarios}>
-          El ensayo se realizó de acuerdo a la norma IEC 62353. Lorem ipsum
-          dolor sit amet consectetur, adipisicing elit. Inventore iste amet iure
-          minus, ad saepe temporibus eos reprehenderit est quo quae aspernatur,
-          perferendis alias quas possimus unde vero excepturi nostrum?
-        </Text>
+        {datosEnsayo.comentario && (
+          <>
+            <Text style={styles.comentariosTitle}>Comentarios del ensayo</Text>
+            <Text style={styles.comentarios}>{datosEnsayo.comentario}</Text>
+          </>
+        )}
 
         {/* Pie de página */}
         <View style={styles.footer}>

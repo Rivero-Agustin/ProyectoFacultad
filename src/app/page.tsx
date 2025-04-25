@@ -125,8 +125,8 @@ const Home = () => {
       <CustomModal
         isOpen={showModal}
         onClose={() => setShowModal(false)}
-        title="Error"
-        message="Complete los campos antes de comenzar con la medición"
+        title="No se puede iniciar el ensayo"
+        message="Complete los datos del ensayo para dar inicio al mismo."
       />
     </>
   );

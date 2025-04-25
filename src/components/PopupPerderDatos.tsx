@@ -6,6 +6,7 @@ import { useDataContext } from "@/context/DataContext";
 
 import Modal from "react-modal";
 import { AppButton } from "./AppButton";
+import { toast } from "sonner";
 
 // Configurar el elemento raíz para accesibilidad
 
@@ -28,6 +29,7 @@ const PopupPerderDatos = ({ isOpen, onRequestClose, children }: Props) => {
   const handleLimpiarMediciones = () => {
     clearMeasurements(); // Limpia las mediciones almacenadas
     onRequestClose(); // Cierra el popup
+    toast.info("Ensayo reiniciado.");
     window.history.back(); // Vuelve a la página anterior
   };
 

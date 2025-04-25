@@ -4,6 +4,7 @@ import "./globals.css";
 import BackButton from "@/components/BackButton";
 import { DataProvider } from "../context/DataContext";
 import { BackButtonProvider } from "@/context/BackButtonContext";
+import { Toaster } from "sonner";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -36,7 +37,11 @@ export default function RootLayout({
               <BackButton></BackButton>
               <h1 className="text-center"> Mediciones Eléctricas IEC 62353 </h1>
             </div>
-            <DataProvider>{children}</DataProvider>
+            <DataProvider>
+              {children}
+              <Toaster richColors position="top-right" />{" "}
+              {/* Notificaciones globales */}
+            </DataProvider>
           </BackButtonProvider>
         </body>
       </>

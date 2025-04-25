@@ -6,6 +6,7 @@ import { useDataContext } from "@/context/DataContext";
 
 import Modal from "react-modal";
 import { AppButton } from "./AppButton";
+import { toast } from "sonner";
 
 // Configurar el elemento raíz para accesibilidad
 
@@ -38,6 +39,7 @@ const PopupSobreescritura = ({
     if (index != -1) {
       measurements[index].value = parseFloat(newValue); // Sobreescribe el valor de la medición existente
     }
+    toast.success("Medición sobreescrita correctamente"); // Muestra un mensaje de éxito
     onRequestClose(); // Cierra el popup
   };
 
