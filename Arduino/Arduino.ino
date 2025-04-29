@@ -14,6 +14,11 @@ void loop() {
         //char comando = Serial.read();
 
         switch(comando) {
+
+          case 0:
+            Serial.println("OK_ARDUINO");
+            break;
+
           case 1:
             //Serial.println("Método directo - Corriente de fuga del equipo"); // Responde a la aplicación con el mensaje recibido
             Serial.println("Midiendo");  //Midiendo
