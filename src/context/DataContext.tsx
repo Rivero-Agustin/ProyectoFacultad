@@ -21,6 +21,8 @@ type DataContextProps = {
   clearMeasurements: () => void;
   datosEnsayo: DatosEnsayo; // Datos del ensayo
   setDatosEnsayo: (datos: Partial<DatosEnsayo>) => void; // Función para establecer los datos del ensayo
+  esPrimeraConexion: boolean;
+  setEsPrimeraConexion: (value: boolean) => void;
 };
 
 const DataContext = createContext<DataContextProps | undefined>(undefined);
@@ -35,6 +37,7 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
     fecha: "",
     comentario: "",
   }); // Estado para almacenar los datos del ensayo
+  const [esPrimeraConexion, setEsPrimeraConexion] = useState(true);
 
   // Función para agregar una nueva medición al array
   const addMeasurement = (measurement: Measurement) => {
@@ -58,6 +61,8 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
         setDatosEnsayo: (datos) =>
           setDatosEnsayo((prev) => ({ ...prev, ...datos })), // Actualiza los datos del ensayo, manteniendo los valores existentes
         // Permite actualizar solo algunos campos de los datos del ensayo
+        esPrimeraConexion,
+        setEsPrimeraConexion,
       }}
     >
       {children}

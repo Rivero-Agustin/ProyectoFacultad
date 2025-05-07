@@ -11,96 +11,27 @@ import { useDataContext } from "@/context/DataContext";
 import CustomModal from "@/components/CustomModal";
 import ButtonArduino from "@/components/ButtonArduino";
 import { toast } from "sonner";
+import { usePopupDesconexion } from "@/context/PopupDesconexionContext";
 
 const Home = () => {
-  const [arduinoData, setArduinoData] = useState("");
   const { setDatosEnsayo } = useDataContext();
   const [formData, setFormData] = useState({
     dispositivo: "",
     nombre: "",
-    fecha: new Date().toISOString().split("T")[0], // Establece la fecha actual como valor por defecto
+    fecha: new Date().toISOString().split("T")[0],
   });
   const router = useRouter();
   const [showModal, setShowModal] = useState(false);
-  const [deshabilitado, setDeshabilitado] = useState(false);
-  const [mostrarMedicion, setMostrarMedicion] = useState(false);
-  const [mensajeConexion, setMensajeConexion] = useState("");
 
-  useEffect(() => {
-    if (window.electron && window.electron.notifyFrontendReady) {
-      window.electron.notifyFrontendReady();
-    }
-  }, []);
-
-  // Efecto para escuchar la respuesta del Arduino
-  useEffect(() => {
-    if (window.electron) {
-      // Configurar el listener
-      window.electron.onArduinoData((data) => {
-        console.log("Recibido de arduino: ", data);
-        setArduinoData(data);
-        setDeshabilitado(false);
-
-        // Actualizar el mensaje de conexión basado en la respuesta
-        if (data.trim() === "OK_ARDUINO") {
-          setMensajeConexion("Conectado");
-        } else {
-          setMensajeConexion("Desconectado");
-        }
-      });
-
-      // Enviar mensaje inicial después de configurar el listener
-      /*setTimeout(() => {
-        console.log("Enviando mensaje inicial al Arduino...");
-        sendToArduino("0");
-        setMostrarMedicion(true);
-      }, 1000); */ // Esperar 1/2 segundo para asegurar que el listener está listo
-    }
-
-    // Solo limpiar el listener cuando el componente se desmonte
-    return () => {
-      if (window.electron) {
-        window.electron.removeArduinoDataListener(() => {});
-      }
-    };
-  }, []);
-
-  // Desconexion de arduino
-  useEffect(() => {
-    if (window.electron) {
-      window.electron.onArduinoDisconnected(() => {
-        toast.error("Arduino desconectado");
-      });
-    }
-  }, []);
-
-  // Conexion de arduino
-  useEffect(() => {
-    if (window.electron) {
-      window.electron.onArduinoReady(() => {
-        console.log("📣 Arduino listo. Enviando '0' desde el frontend...");
-        setTimeout(() => {
-          sendToArduino("0");
-          setMostrarMedicion(true);
-          toast.success("Arduino conectado");
-        }, 1000);
-      });
-    }
-
-    return () => {
-      if (window.electron) {
-        window.electron.onArduinoReady(() => {}); // Limpia el listener
-      }
-    };
-  }, []);
+  const { openPopupDesconexion } = usePopupDesconexion();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target; // Desestructura el evento
-    setFormData((prev) => ({ ...prev, [name]: value })); // Actualiza el estado del formulario
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault(); // Evita el comportamiento por defecto del formulario
+    e.preventDefault();
     const { dispositivo, nombre, fecha } = formData;
 
     if (!dispositivo || !nombre || !fecha) {
@@ -108,7 +39,7 @@ const Home = () => {
       return;
     }
     setDatosEnsayo(formData);
-    router.push("/iniciar"); // Redirige a la página de inicio de medicion
+    router.push("/iniciar");
   };
 
   return (
@@ -121,20 +52,6 @@ const Home = () => {
           sint vitae, at eaque similique impedit. Nihil aspernatur corrupti
           voluptas, nemo laboriosam beatae unde natus?
         </p>
-        <div className="flex flex-row items-center justify-center">
-          <ButtonArduino
-            sendParam="0"
-            sendToArduino={sendToArduino}
-            deshabilitado={deshabilitado}
-            setDeshabilitado={setDeshabilitado}
-            setMostrarMedicion={setMostrarMedicion}
-          >
-            Conectar
-          </ButtonArduino>
-          {mostrarMedicion && !deshabilitado && (
-            <p>Estado: {mensajeConexion}</p>
-          )}
-        </div>
       </div>
       <div className="mx-20 bg-gray-700 rounded-lg p-4">
         <form
@@ -178,7 +95,6 @@ const Home = () => {
               value={formData.fecha}
               onChange={handleChange}
               className="p-2 border text-black rounded w-full h-10"
-              // defaultValue={new Date().toISOString().split("T")[0]} // Establece la fecha actual como valor por defecto
             />
           </div>
 

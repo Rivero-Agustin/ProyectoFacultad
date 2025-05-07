@@ -5,6 +5,10 @@ import BackButton from "@/components/BackButton";
 import { DataProvider } from "../context/DataContext";
 import { BackButtonProvider } from "@/context/BackButtonContext";
 import { Toaster } from "sonner";
+import Modal from "react-modal";
+import { PopupDesconexionProvider } from "@/context/PopupDesconexionContext";
+import PopupDesconexion from "@/components/PopupDesconexion";
+import { ArduinoProvider } from "@/context/ArduinoContext";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -32,17 +36,25 @@ export default function RootLayout({
         <body
           className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         >
-          <BackButtonProvider>
-            <div className="text-4xl text-white bg-cyan-900 m-1 p-3 text-center rounded relative">
-              <BackButton></BackButton>
-              <h1 className="text-center"> Mediciones Eléctricas IEC 62353 </h1>
-            </div>
-            <DataProvider>
-              {children}
-              <Toaster richColors position="top-right" />{" "}
-              {/* Notificaciones globales */}
-            </DataProvider>
-          </BackButtonProvider>
+          <PopupDesconexionProvider>
+            <BackButtonProvider>
+              <div className="text-4xl text-white bg-cyan-900 m-1 p-3 text-center rounded relative">
+                <BackButton></BackButton>
+                <h1 className="text-center">
+                  {" "}
+                  Mediciones Eléctricas IEC 62353{" "}
+                </h1>
+              </div>
+              <DataProvider>
+                <ArduinoProvider>
+                  {children}
+                  <Toaster richColors position="top-right" />{" "}
+                  {/* Notificaciones globales */}
+                  <PopupDesconexion />
+                </ArduinoProvider>
+              </DataProvider>
+            </BackButtonProvider>
+          </PopupDesconexionProvider>
         </body>
       </>
     </html>

@@ -8,11 +8,12 @@ let port;
 let parser;
 let reconnectInterval;
 let isTryingToReconnect = false;
-let frontendReady = false;
 let lastArduinoReady = false;
+let reconnecting = false;
 
 const ARDUINO_VENDOR_ID = "1A86";
 const ARDUINO_PRODUCT_ID = "7523";
+const DEVICE_READY_MESSAGE = "OK_ARDUINO";
 
 function connectToArduino(path) {
   port = new SerialPort({ path, baudRate: 9600 });
@@ -20,8 +21,13 @@ function connectToArduino(path) {
   parser = port.pipe(new ReadlineParser({ delimiter: "\n" }));
 
   port.on("open", () => {
-    console.log("🔗 Puerto abierto. Limpiando buffer...");
-    mainWindow.webContents.send("arduino-ready");
+    setTimeout(() => {
+      // Si es la primera conexion, el aviso del arduino ready ya se envio con ipcMain.on("frontend-ready".....
+      if (reconnecting) {
+        mainWindow.webContents.send("arduino-ready");
+        reconnecting = false;
+      }
+    }, 1000);
 
     port.verified = false; //
   });
@@ -30,10 +36,11 @@ function connectToArduino(path) {
     const mensaje = data.trim();
     console.log("📡 Recibido:", mensaje);
 
-    if (!port.verified && mensaje === "OK_ARDUINO") {
+    // Verificacion de que el dispositivo es el correcto, es decir, que el arduino tiene cargado el programa correcto
+    if (!port.verified && mensaje === DEVICE_READY_MESSAGE) {
       port.verified = true;
-      console.log("✅ Arduino verificado");
-      mainWindow.webContents.send("arduino-ready");
+      console.log("✅ Dispositivo verificado");
+      mainWindow.webContents.send("arduino-data", mensaje);
     } else if (port.verified) {
       mainWindow.webContents.send("arduino-data", mensaje);
     }
@@ -41,7 +48,7 @@ function connectToArduino(path) {
 
   port.on("close", () => {
     console.log("🔌 Arduino desconectado");
-    mainWindow.webContents.send("arduino-disconnected");
+    mainWindow.webContents.send("arduino-disconnected"); //Notificacion
     startReconnectLoop();
   });
 
@@ -60,6 +67,7 @@ function setupDataListener() {
 function startReconnectLoop() {
   if (reconnectInterval || isTryingToReconnect) return;
 
+  reconnecting = true;
   console.log("🔁 Iniciando reconexión...");
   reconnectInterval = setInterval(async () => {
     const ports = await SerialPort.list();
@@ -116,7 +124,6 @@ ipcMain.on("send-to-arduino", (event, message) => {
 
 ipcMain.on("frontend-ready", () => {
   console.log("🌐 Frontend está listo");
-  frontendReady = true;
   mainWindow.webContents.send("arduino-ready");
 
   if (lastArduinoReady) {
