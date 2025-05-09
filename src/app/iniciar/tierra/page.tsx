@@ -1,13 +1,13 @@
-import ButtonArduino from "@/components/ButtonArduino";
 import MeasurementFlowContainer from "@/components/MeasurementFlowContainer";
-import { sendToArduino } from "@/utils/arduino";
+import TitleCard from "@/components/TitleCard";
 import Image from "next/image";
 
 export default function Tierra() {
   return (
     <>
-      <div className="flex flex-col items-center">
-        <h1>Resistencia de Tierra de Protección</h1>
+      <TitleCard title="Resistencia de Tierra de Protección" />
+
+      <div className="flex flex-col items-center m-1">
         <Image
           src="/circuito_tierra.PNG"
           alt="Circuito de Tierra de Protección"

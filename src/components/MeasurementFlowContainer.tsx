@@ -26,7 +26,7 @@ export default function MeasurementFlowContainer({ unidad, sendParam }: Props) {
   }, [medicionTerminada]);
 
   return (
-    <div className="flex flex-col items-center gap-4">
+    <div className="flex flex-col items-center gap-1">
       <ButtonArduino
         sendToArduino={sendToArduino}
         sendParam={sendParam}
@@ -35,6 +35,7 @@ export default function MeasurementFlowContainer({ unidad, sendParam }: Props) {
         setMostrarMedicion={setMostrarMedicion}
         deshabilitado={deshabilitado}
         setDeshabilitado={setDeshabilitado}
+        className="m-2"
       >
         Realizar medición
       </ButtonArduino>

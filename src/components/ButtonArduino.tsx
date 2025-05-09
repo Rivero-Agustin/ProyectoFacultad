@@ -8,6 +8,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 import Measurement from "./Measurement";
+import { AppButton } from "./AppButton";
 
 interface ButtonArduinoProps {
   href?: string;
@@ -58,11 +59,7 @@ const ButtonArduino = ({
     }
   };
 
-  const classes = ` p-2 m-5 rounded-lg text-xl transition text-center ${
-    deshabilitado
-      ? "bg-gray-400 cursor-not-allowed"
-      : "bg-cyan-700 hover:bg-cyan-900"
-  } ${className}`;
+  const classes = `text-xl ${className}`;
 
   if (href) {
     return (
@@ -74,14 +71,15 @@ const ButtonArduino = ({
   // si hay un href, renderiza un link, sino un button:
   return (
     <>
-      <button
+      <AppButton
         className={classes}
         onClick={handleClick}
         disabled={deshabilitado}
+        variant="default"
         {...props}
       >
         {repetir ? "Repetir medición" : children}
-      </button>
+      </AppButton>
     </>
   );
 };

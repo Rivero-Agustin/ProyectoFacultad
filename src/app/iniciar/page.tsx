@@ -9,6 +9,7 @@ import { useBackButton } from "@/context/BackButtonContext";
 import { useDataContext } from "@/context/DataContext";
 import { formatearFecha } from "@/utils/formatearFecha";
 import PopupPerderDatos from "@/components/PopupPerderDatos";
+import TitleCard from "@/components/TitleCard";
 
 export default function Iniciar() {
   const { measurements, datosEnsayo } = useDataContext(); // Función del contexto
@@ -49,6 +50,8 @@ export default function Iniciar() {
           </p>
         </div>
       </PopupPerderDatos>
+      <TitleCard title="Menú de mediciones" />
+
       <div className="grid grid-cols-3 gap-2 mx-2">
         <Card title="Dispositivo" info={datosEnsayo.dispositivo}></Card>
         <Card title="Técnico laboratorista" info={datosEnsayo.nombre}></Card>

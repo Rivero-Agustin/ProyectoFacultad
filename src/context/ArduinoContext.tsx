@@ -59,7 +59,7 @@ export const ArduinoProvider = ({ children }: { children: ReactNode }) => {
     };
 
     const handleArduinoDisconnected = () => {
-      toast.error("Arduino desconectado");
+      toast.error("Dispositivo desconectado");
 
       const currentPath = pathnameRef.current;
       const currentRouter = routerRef.current;

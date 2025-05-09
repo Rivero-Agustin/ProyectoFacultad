@@ -1,20 +1,21 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useRouter, usePathname } from "next/navigation";
+import { useState } from "react";
 import { useDataContext } from "@/context/DataContext";
 import CustomModal from "@/components/CustomModal";
 import { PDFViewer, PDFDownloadLink, pdf } from "@react-pdf/renderer";
 import PDFReport from "@/components/PDFReport";
 import PopupAgregarComentario from "./PopupAgregarComentario";
-import { toast } from "sonner";
 import { AppButton } from "./AppButton";
-import { saveAs } from "file-saver";
 import { formatearFecha } from "@/utils/formatearFecha";
-import { getHours } from "date-fns";
 import { obtenerHorario } from "@/utils/obtenerHorario";
+import { toast } from "sonner";
 
 const GeneratePDFButton = () => {
-  const { measurements, datosEnsayo } = useDataContext();
+  const router = useRouter();
+  const pathname = usePathname();
+  const { measurements, datosEnsayo, clearMeasurements } = useDataContext();
   const [showModal, setShowModal] = useState(false);
   const [showPreview, setShowPreview] = useState(false);
   const [showAgregarComentario, setShowAgregarComentario] = useState(false);
@@ -28,21 +29,18 @@ const GeneratePDFButton = () => {
     setShowAgregarComentario(true);
   };
 
-  // const handleDownload = async () => {
-  //   const blob = await pdf(
-  //     <PDFReport datosEnsayo={datosEnsayo} measurements={measurements} />
-  //   ).toBlob();
-  //   saveAs(blob, "informe_mediciones.pdf");
-  //   toast.success("PDF descargado con éxito", {
-  //     description: "El informe se ha descargado correctamente.",
-  // //   });
-  // };
+  const handleFinalizar = () => {
+    setShowPreview(false);
+    clearMeasurements();
+    router.push("/");
+    toast.info("Ensayo finalizado.");
+  };
 
   return (
     <div className="flex flex-col items-center">
       <button
         onClick={handleGeneratePDF}
-        className="bg-green-600 text-white p-2 rounded-lg hover:bg-green-700"
+        className="bg-green-700 text-white p-2 rounded-lg hover:bg-green-800"
       >
         Generar informe
       </button>
@@ -81,12 +79,16 @@ const GeneratePDFButton = () => {
 
             <div className="flex justify-between mt-4">
               {/* Botón para cerrar */}
-              <button
+              <AppButton
                 onClick={() => setShowPreview(false)}
-                className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-700"
+                variant="buttonRed"
               >
                 Cerrar
-              </button>
+              </AppButton>
+
+              <AppButton variant="buttonCyan" onClick={handleFinalizar}>
+                Finalizar ensayo
+              </AppButton>
 
               {/* Botón para descargar */}
               <PDFDownloadLink
@@ -99,11 +101,10 @@ const GeneratePDFButton = () => {
                 fileName={`informe_iec62353_${formatearFecha(
                   datosEnsayo.fecha
                 )}-${obtenerHorario()}.pdf`}
-                className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700"
+                className="m-2 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
               >
                 Descargar PDF
               </PDFDownloadLink>
-              {/* <AppButton onClick={handleDownload}>Descargar PDF</AppButton> */}
             </div>
           </div>
         </div>

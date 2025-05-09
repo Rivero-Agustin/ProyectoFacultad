@@ -38,7 +38,7 @@ export default function RootLayout({
         >
           <PopupDesconexionProvider>
             <BackButtonProvider>
-              <div className="text-4xl text-white bg-cyan-900 m-1 p-3 text-center rounded relative">
+              <div className="text-4xl text-white bg-blue-900 m-1 p-3 text-center rounded relative">
                 <BackButton></BackButton>
                 <h1 className="text-center">
                   {" "}

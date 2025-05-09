@@ -1,10 +1,11 @@
 import { AppLink } from "@/components/AppLink";
+import TitleCard from "@/components/TitleCard";
 
 export default function Fugaequipo() {
   return (
     <>
+      <TitleCard title="Corriente de Fuga del Equipo" />
       <div className="flex flex-col items-center">
-        <h1 className="mb-5">Corriente de Fuga del Equipo</h1>
         <div>
           <AppLink href="/iniciar/fugaequipo/directo">Método Directo</AppLink>
           <AppLink href="/iniciar/fugaequipo/alternativo">

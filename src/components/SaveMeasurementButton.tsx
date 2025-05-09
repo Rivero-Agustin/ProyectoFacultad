@@ -5,6 +5,7 @@ import { useState } from "react";
 import { useDataContext } from "@/context/DataContext";
 import EstructuraMediciones from "./EstructuraMediciones";
 import { toast } from "sonner";
+import { AppButton } from "./AppButton";
 
 type SaveMeasurementButtonProps = {
   saveValue: string; // Valor a guardar
@@ -70,13 +71,14 @@ export default function SaveMeasurementButton({
 
   return (
     <>
-      <button
-        className="p-2 m-5 rounded-lg text-xl transition text-center bg-cyan-700 hover:bg-cyan-900"
+      <AppButton
+        className="text-lg"
+        variant="default"
         onClick={handleAddMeasurement}
         {...props}
       >
         Guardar
-      </button>
+      </AppButton>
       <EstructuraMediciones></EstructuraMediciones>
     </>
   );

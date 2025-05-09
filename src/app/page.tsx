@@ -23,8 +23,6 @@ const Home = () => {
   const router = useRouter();
   const [showModal, setShowModal] = useState(false);
 
-  const { openPopupDesconexion } = usePopupDesconexion();
-
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
@@ -110,7 +108,7 @@ const Home = () => {
         isOpen={showModal}
         onClose={() => setShowModal(false)}
         title="No se puede iniciar el ensayo"
-        message="Complete los datos del ensayo para dar inicio al mismo."
+        message="Complete los datos del ensayo para comenzar."
       />
     </>
   );

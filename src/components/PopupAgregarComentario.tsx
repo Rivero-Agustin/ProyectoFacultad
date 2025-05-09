@@ -88,7 +88,8 @@ const PopupAgregarComentario = ({
           <div className="flex justify-around w-full">
             <AppButton
               onClick={handleSkip}
-              className="bg-red-600 hover:bg-red-800 w-1/3"
+              className="w-1/3"
+              variant="buttonRed"
             >
               Omitir
             </AppButton>

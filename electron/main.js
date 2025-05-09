@@ -10,6 +10,7 @@ let reconnectInterval;
 let isTryingToReconnect = false;
 let lastArduinoReady = false;
 let reconnecting = false;
+let isArduinoConnected = false;
 
 const ARDUINO_VENDOR_ID = "1A86";
 const ARDUINO_PRODUCT_ID = "7523";
@@ -108,6 +109,7 @@ app.whenReady().then(async () => {
 
   if (arduino) {
     connectToArduino(arduino.path);
+    isArduinoConnected = true;
   } else {
     console.log("⚠️ Arduino no detectado al iniciar.");
     startReconnectLoop();
@@ -124,7 +126,12 @@ ipcMain.on("send-to-arduino", (event, message) => {
 
 ipcMain.on("frontend-ready", () => {
   console.log("🌐 Frontend está listo");
-  mainWindow.webContents.send("arduino-ready");
+
+  if (isArduinoConnected) {
+    mainWindow.webContents.send("arduino-ready");
+  } else {
+    mainWindow.webContents.send("arduino-disconnected"); //Notificacion
+  }
 
   if (lastArduinoReady) {
     console.log("send arduino-ready");
