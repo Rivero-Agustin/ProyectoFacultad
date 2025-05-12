@@ -1,16 +1,15 @@
 import { AppLink } from "@/components/AppLink";
+import TitleCard from "@/components/TitleCard";
 
 export default function Fugapartes() {
   return (
     <>
-      <div className="flex flex-col items-center">
-        <h1 className="mb-5">Corriente de Fuga de las partes aplicables</h1>
-        <div>
-          <AppLink href="/iniciar/fugapartes/directo">Método Directo</AppLink>
-          <AppLink href="/iniciar/fugapartes/alternativo">
-            Método Alternativo
-          </AppLink>
-        </div>
+      <TitleCard title="Corriente de Fuga de las partes aplicables" />
+      <div className="flex flex-row justify-center gap-3">
+        <AppLink href="/iniciar/fugapartes/directo">Método Directo</AppLink>
+        <AppLink href="/iniciar/fugapartes/alternativo">
+          Método Alternativo
+        </AppLink>
       </div>
     </>
   );

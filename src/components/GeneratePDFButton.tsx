@@ -38,12 +38,9 @@ const GeneratePDFButton = () => {
 
   return (
     <div className="flex flex-col items-center">
-      <button
-        onClick={handleGeneratePDF}
-        className="bg-green-700 text-white p-2 rounded-lg hover:bg-green-800"
-      >
+      <AppButton onClick={handleGeneratePDF} variant="saveButton">
         Generar informe
-      </button>
+      </AppButton>
 
       <CustomModal
         isOpen={showModal}

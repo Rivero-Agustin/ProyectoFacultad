@@ -21,9 +21,9 @@ export const AppLink: React.FC<AppLinkProps> = ({
   target,
   rel,
 }) => {
-  const classes = "p-2 m-3 rounded-lg text-xl transition text-center";
+  const classes = "p-2 rounded-lg text-xl transition text-center";
   const variants = {
-    default: "bg-cyan-700 hover:bg-cyan-900",
+    default: "bg-primary-button hover:bg-primary-button-hover",
     ghost: "bg-gray-700 hover:bg-cyan-900",
     button:
       "inline-block px-4 py-2 rounded-xl bg-blue-600 text-white hover:bg-blue-700 transition-colors",

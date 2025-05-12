@@ -71,15 +71,9 @@ export default function SaveMeasurementButton({
 
   return (
     <>
-      <AppButton
-        className="text-lg"
-        variant="default"
-        onClick={handleAddMeasurement}
-        {...props}
-      >
+      <AppButton variant="saveButton" onClick={handleAddMeasurement} {...props}>
         Guardar
       </AppButton>
-      <EstructuraMediciones></EstructuraMediciones>
     </>
   );
 }

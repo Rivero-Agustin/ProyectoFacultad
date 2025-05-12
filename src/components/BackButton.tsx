@@ -32,7 +32,7 @@ const BackButton = () => {
   return (
     <button
       onClick={handleBack}
-      className="bg-white flex items-center justify-center h-8 w-8 rounded-xl absolute top-1/2 transform -translate-y-1/2"
+      className="bg-primary-navigation hover:bg-primary-navigation-hover flex items-center justify-center h-8 w-8 rounded-xl absolute top-1/2 transform -translate-y-1/2"
     >
       <ArrowLeftIcon className="h-5 w-5 text-black font-black" />
     </button>

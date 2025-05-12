@@ -98,7 +98,7 @@ const Home = () => {
 
           <AppButton
             type="submit"
-            className="col-span-3 mx-auto border-2 border-black"
+            className="col-span-3 mx-auto border-2 border-primary-border"
           >
             Iniciar medición
           </AppButton>

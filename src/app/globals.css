@@ -3,19 +3,76 @@
 @tailwind utilities;
 
 :root {
+  /* Colores principales */
+  --primary: #2563eb;
+  --primary-dark: #1d4ed8;
+  --primary-light: #3b82f6;
+
+  /* Colores secundarios */
+  --secondary: #64748b;
+  --secondary-dark: #475569;
+  --secondary-light: #94a3b8;
+
+  /* Colores de fondo */
   --background: #ffffff;
+  --background-alt: #f8fafc;
+
+  /* Colores de texto */
   --foreground: #171717;
+  --foreground-muted: #64748b;
+
+  /* Colores de estado */
+  --success: #22c55e;
+  --error: #ef4444;
+  --warning: #f59e0b;
+  --info: #3b82f6;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
+    /* Colores principales */
+    --primary: #3b82f6;
+    --primary-dark: #2563eb;
+    --primary-light: #60a5fa;
+    --primary-cardlayout: theme("colors.blue.950");
+    --primary-titlecard: theme("colors.blue.900");
+    --primary-button: theme("colors.sky.700");
+    --primary-button-hover: theme("colors.sky.900");
+    --primary-fondos: theme("colors.blue.300");
+    --primary-border: theme("colors.blue.950");
+    --primary-navigation: theme("colors.blue.100");
+    --primary-navigation-hover: theme("colors.blue.200");
+    --primary-card: theme("colors.gray.700");
+    --primary-card-campo: theme("colors.gray.600");
+
+    --green-button: theme("colors.green.700");
+    --green-button-hover: theme("colors.green.900");
+
+    --green-aux: theme("colors.green.600");
+
+    /* Colores secundarios */
+    --secondary: #94a3b8;
+    --secondary-dark: #64748b;
+    --secondary-light: #cbd5e1;
+
+    /* Colores de fondo */
     --background: #0a0a0a;
+    --background-alt: #12151a;
+
+    /* Colores de texto */
     --foreground: #ededed;
+    --foreground-muted: #94a3b8;
+
+    /* Colores de estado */
+    --success: theme("colors.green.300");
+    --error: theme("colors.red.600");
+    --warning: #f59e0b;
+    --info: #3b82f6;
   }
 }
 
 body {
   color: var(--foreground);
-  background: var(--background);
+  background: var(--background-alt);
   font-family: Arial, Helvetica, sans-serif;
 }

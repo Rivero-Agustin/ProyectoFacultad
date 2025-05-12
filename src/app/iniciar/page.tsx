@@ -57,42 +57,44 @@ export default function Iniciar() {
         <Card title="Técnico laboratorista" info={datosEnsayo.nombre}></Card>
         <Card title="Fecha" info={formatearFecha(datosEnsayo.fecha)}></Card>
       </div>
-      <h2 className="text-center mt-2">Seleccione la medición a realizar</h2>
-      <div className="grid grid-cols-[1fr_auto] mx-20">
-        <div className="contents">
-          <AppLink className="w-full" href="/iniciar/fugaequipo">
-            Corriente de fuga del equipo
-          </AppLink>
-          <MedicionRealizada
-            realizada={medicionesRealizadas[1] || medicionesRealizadas[2]}
-          ></MedicionRealizada>
+      <div className="flex flex-col gap-2">
+        <h2 className="text-center mt-2">Seleccione la medición a realizar</h2>
+        <div className="grid grid-cols-[1fr_auto] mx-20 gap-y-3">
+          <div className="contents">
+            <AppLink className="w-full" href="/iniciar/fugaequipo">
+              Corriente de fuga del equipo
+            </AppLink>
+            <MedicionRealizada
+              realizada={medicionesRealizadas[1] || medicionesRealizadas[2]}
+            ></MedicionRealizada>
+          </div>
+          <div className="contents">
+            <AppLink className="w-full" href="/iniciar/fugapartes">
+              Corriente de fuga de partes aplicables
+            </AppLink>
+            <MedicionRealizada
+              realizada={medicionesRealizadas[3] || medicionesRealizadas[4]}
+            ></MedicionRealizada>
+          </div>
+          <div className="contents">
+            <AppLink className="w-full" href="/iniciar/aislamiento">
+              Resistencia de aislamiento
+            </AppLink>
+            <MedicionRealizada
+              realizada={medicionesRealizadas[5]}
+            ></MedicionRealizada>
+          </div>
+          <div className="contents">
+            <AppLink className="w-full" href="/iniciar/tierra">
+              Resistencia de tierra de protección
+            </AppLink>
+            <MedicionRealizada
+              realizada={medicionesRealizadas[6]}
+            ></MedicionRealizada>
+          </div>
         </div>
-        <div className="contents">
-          <AppLink className="w-full" href="/iniciar/fugapartes">
-            Corriente de fuga de partes aplicables
-          </AppLink>
-          <MedicionRealizada
-            realizada={medicionesRealizadas[3] || medicionesRealizadas[4]}
-          ></MedicionRealizada>
-        </div>
-        <div className="contents">
-          <AppLink className="w-full" href="/iniciar/aislamiento">
-            Resistencia de aislamiento
-          </AppLink>
-          <MedicionRealizada
-            realizada={medicionesRealizadas[5]}
-          ></MedicionRealizada>
-        </div>
-        <div className="contents">
-          <AppLink className="w-full" href="/iniciar/tierra">
-            Resistencia de tierra de protección
-          </AppLink>
-          <MedicionRealizada
-            realizada={medicionesRealizadas[6]}
-          ></MedicionRealizada>
-        </div>
+        <GeneratePDFButton />
       </div>
-      <GeneratePDFButton />
 
       <div className="grid grid-cols-2">
         <div>

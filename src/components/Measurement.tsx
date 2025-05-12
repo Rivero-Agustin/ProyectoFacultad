@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import SaveMeasurementButton from "./SaveMeasurementButton";
 import PopupSobreescritura from "./PopupSorbeescritura";
+import EstructuraMediciones from "./EstructuraMediciones";
 
 type Props = {
   unidad: string;
@@ -48,23 +49,27 @@ export default function Measurement({
   }, []);
 
   return arduinoData.trim() == "Midiendo" || primeraMed ? (
-    <p className="text-white text-xl bg-red-600 p-2 rounded">
+    <p className="text-white text-xl bg-error p-2 rounded-lg">
       Realizando medición...
     </p>
   ) : (
     <>
-      <p className="text-white text-xl">
-        Resultado:{" "}
-        <span className="text-green-600 font-bold">
-          {arduinoData} {unidad}
-        </span>
-      </p>
-      <SaveMeasurementButton
-        saveValue={arduinoData}
-        unit={unidad}
-        type={type}
-        setIsOpen={setIsOpen} // Pasar la función para abrir el popup
-      ></SaveMeasurementButton>
+      <div className="w-full flex flex-row justify-center gap-4 items-center">
+        <p className="text-white text-xl">
+          Resultado:{" "}
+          <span className="text-success font-bold">
+            {arduinoData} {unidad}
+          </span>
+        </p>
+        <SaveMeasurementButton
+          saveValue={arduinoData}
+          unit={unidad}
+          type={type}
+          setIsOpen={setIsOpen} // Pasar la función para abrir el popup
+        ></SaveMeasurementButton>
+      </div>
+      {/* <EstructuraMediciones></EstructuraMediciones> */}
+
       <PopupSobreescritura
         isOpen={isOpen}
         onRequestClose={() => setIsOpen(false)}

@@ -1,13 +1,12 @@
-import ButtonArduino from "@/components/ButtonArduino";
 import MeasurementFlowContainer from "@/components/MeasurementFlowContainer";
-import { sendToArduino } from "@/utils/arduino";
+import TitleCard from "@/components/TitleCard";
 import Image from "next/image";
 
 export default function Alternativo() {
   return (
     <>
+      <TitleCard title="Corriente de Fuga de las partes aplicables - Método Alternativo" />
       <div className="flex flex-col items-center">
-        <h1>Corriente de Fuga de Partes Aplicables - Método Alternativo</h1>
         <Image
           src="/circuito_fugaparte_alternativo.JPG"
           alt="Circuito del método alternativo para la Corriente de Fuga de Partes Aplicables"
