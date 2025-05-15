@@ -1,17 +1,11 @@
 "use client"; // Indica que este componente se ejecuta en el cliente
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useRouter } from "next/navigation"; // Importa el hook useRouter de next/navigation
-import { sendToArduino } from "@/utils/arduino";
 // import Button from "@/components/ButtonArduino";
-import Button from "next/link";
-import { AppLink } from "@/components/AppLink";
 import { AppButton } from "@/components/AppButton";
 import { useDataContext } from "@/context/DataContext";
-import CustomModal from "@/components/CustomModal";
-import ButtonArduino from "@/components/ButtonArduino";
-import { toast } from "sonner";
-import { usePopupDesconexion } from "@/context/PopupDesconexionContext";
+import PopupSimple from "@/components/popups/PopupSimple";
 
 const Home = () => {
   const { setDatosEnsayo } = useDataContext();
@@ -104,7 +98,7 @@ const Home = () => {
           </AppButton>
         </form>
       </div>
-      <CustomModal
+      <PopupSimple
         isOpen={showModal}
         onClose={() => setShowModal(false)}
         title="No se puede iniciar el ensayo"

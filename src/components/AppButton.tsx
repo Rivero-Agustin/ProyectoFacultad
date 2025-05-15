@@ -30,7 +30,7 @@ export const AppButton: React.FC<AppButtonProps> = ({
   const classes =
     "transition text-center text-white px-4 py-2 rounded-lg text-xl";
   const variants = {
-    default: "bg-primary-button hover:bg-primary-button-hover",
+    default: "bg-primary-button hover:bg-primary-button-hover ",
     ghost: "bg-gray-700 hover:bg-cyan-900",
     button:
       "inline-block px-4 py-2 rounded-xl bg-blue-600 text-white hover:bg-blue-700 transition-colors",

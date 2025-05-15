@@ -5,15 +5,15 @@ import { useEffect } from "react";
 import { useDataContext } from "@/context/DataContext";
 
 import Modal from "react-modal";
-import { AppButton } from "./AppButton";
+import { AppButton } from "../AppButton";
 import { toast } from "sonner";
+import { BaseModal } from "./BaseModal";
 
 // Configurar el elemento raíz para accesibilidad
 
 interface Props {
   isOpen: boolean;
   onRequestClose: () => void;
-  children: React.ReactNode;
   type: number; // Tipo de medición
   newValue: string; // Valor de la medición
 }
@@ -21,7 +21,6 @@ interface Props {
 const PopupSobreescritura = ({
   isOpen,
   onRequestClose,
-  children,
   type,
   newValue,
 }: Props) => {
@@ -44,37 +43,21 @@ const PopupSobreescritura = ({
   };
 
   return (
-    <Modal
+    <BaseModal
       isOpen={isOpen}
       onRequestClose={onRequestClose}
       contentLabel="PopUp de sobreescritura de medición"
-      style={{
-        content: {
-          top: "50%",
-          left: "50%",
-          right: "auto",
-          bottom: "auto",
-          marginRight: "-50%",
-          transform: "translate(-50%, -50%)",
-          padding: "2rem",
-          borderRadius: "1rem",
-        },
-        overlay: {
-          backgroundColor: "rgba(0, 0, 0, 0.5)",
-        },
-      }}
-    >
-      {children}
-      <div className="flex justify-center gap-4 mt-2">
-        <AppButton
-          onClick={onRequestClose}
-          className="bg-red-500 hover:bg-red-800"
-        >
-          Cancelar
-        </AppButton>
-        <AppButton onClick={handleSobreescribir}>Aceptar</AppButton>
-      </div>
-    </Modal>
+      title="Esta medición ya se ha guardado"
+      description="Desea sobreescribir la medición anterior?"
+      footer={
+        <div className="flex justify-around">
+          <AppButton onClick={onRequestClose} variant="buttonRed">
+            Cancelar
+          </AppButton>
+          <AppButton onClick={handleSobreescribir}>Aceptar</AppButton>
+        </div>
+      }
+    ></BaseModal>
   );
 };
 

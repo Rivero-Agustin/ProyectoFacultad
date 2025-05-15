@@ -8,7 +8,7 @@ import { useEffect, useState } from "react";
 import { useBackButton } from "@/context/BackButtonContext";
 import { useDataContext } from "@/context/DataContext";
 import { formatearFecha } from "@/utils/formatearFecha";
-import PopupPerderDatos from "@/components/PopupPerderDatos";
+import PopupPerderDatos from "@/components/popups/PopupPerderDatos";
 import TitleCard from "@/components/TitleCard";
 
 export default function Iniciar() {
@@ -40,16 +40,7 @@ export default function Iniciar() {
       <PopupPerderDatos
         isOpen={showModal}
         onRequestClose={() => setShowModal(false)}
-      >
-        <div>
-          <h2 className="mt-2 text-2xl font-bold text-black">
-            Si vuelve atrás se perderan las mediciones ya realizadas
-          </h2>
-          <p className="mt-4 text-black text-center">
-            Está seguro que desea continuar?
-          </p>
-        </div>
-      </PopupPerderDatos>
+      />
       <TitleCard title="Menú de mediciones" />
 
       <div className="grid grid-cols-3 gap-2 mx-2">

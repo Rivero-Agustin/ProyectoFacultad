@@ -7,7 +7,7 @@ import { BackButtonProvider } from "@/context/BackButtonContext";
 import { Toaster } from "sonner";
 import Modal from "react-modal";
 import { PopupDesconexionProvider } from "@/context/PopupDesconexionContext";
-import PopupDesconexion from "@/components/PopupDesconexion";
+import PopupDesconexion from "@/components/popups/PopupDesconexion";
 import { ArduinoProvider } from "@/context/ArduinoContext";
 
 const geistSans = Geist({

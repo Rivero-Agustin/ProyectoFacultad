@@ -1,34 +1,24 @@
 // components/Popup.tsx
 "use client";
 import React from "react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useDataContext } from "@/context/DataContext";
+import { FiArrowLeft } from "react-icons/fi";
 
-import Modal from "react-modal";
-import { AppButton } from "./AppButton";
-
-// Configurar el elemento raíz para accesibilidad
+import { AppButton } from "../AppButton";
+import { BaseModal } from "./BaseModal";
 
 interface Props {
   isOpen: boolean;
   onRequestClose: () => void;
-  children: React.ReactNode;
   setShowPreview: (show: boolean) => void; // Prop para manejar la vista previa
 }
 
 const PopupAgregarComentario = ({
   isOpen,
   onRequestClose,
-  children,
   setShowPreview,
 }: Props) => {
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      Modal.setAppElement(document.body);
-      // Asegura que el modal se vincule correctamente al elemento raíz
-    }
-  }, []);
-
   const [comment, setComment] = useState("");
   const { setDatosEnsayo } = useDataContext(); // Función del contexto
 
@@ -53,30 +43,23 @@ const PopupAgregarComentario = ({
   };
 
   return (
-    <Modal
+    <BaseModal
       isOpen={isOpen}
       onRequestClose={onRequestClose}
       contentLabel="PopUp para agregar comentario"
-      style={{
-        content: {
-          top: "50%",
-          left: "50%",
-          right: "auto",
-          bottom: "auto",
-          marginRight: "-50%",
-          transform: "translate(-50%, -50%)",
-          padding: "2rem",
-          borderRadius: "1rem",
-          width: "50%",
-        },
-        overlay: {
-          backgroundColor: "rgba(0, 0, 0, 0.5)",
-        },
-      }}
+      title="Desea agregar un comentario del ensayo?"
     >
-      {children}
-
-      <div className="grid-cols-1 gap-4 mt-2 w-full">
+      {/* Botón de volver atrás con icono de react-icons */}
+      <button
+        type="button"
+        onClick={onRequestClose}
+        className="absolute left-2 top-2 text-2xl text-gray-700 hover:text-black focus:outline-none "
+        aria-label="Volver"
+        style={{ zIndex: 10 }}
+      >
+        <FiArrowLeft />
+      </button>
+      <div className="flex flex-col gap-3 w-full">
         <form onSubmit={handleSubmit} className="">
           <textarea
             className="border-2 rounded-lg text-black p-2 w-full h-28"
@@ -93,16 +76,13 @@ const PopupAgregarComentario = ({
             >
               Omitir
             </AppButton>
-            <AppButton
-              className="w-1/3"
-              type="submit" /*onClick={handleAgregarComentario}*/
-            >
+            <AppButton className="w-1/3" type="submit">
               Aceptar
             </AppButton>
           </div>
         </form>
       </div>
-    </Modal>
+    </BaseModal>
   );
 };
 

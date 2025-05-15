@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import SaveMeasurementButton from "./SaveMeasurementButton";
-import PopupSobreescritura from "./PopupSorbeescritura";
+import PopupSobreescritura from "./popups/PopupSorbeescritura";
 import EstructuraMediciones from "./EstructuraMediciones";
 
 type Props = {
@@ -75,16 +75,7 @@ export default function Measurement({
         onRequestClose={() => setIsOpen(false)}
         type={type} // Pasar el tipo de medición al popup
         newValue={arduinoData} // Pasar el valor al popup
-      >
-        <div>
-          <h2 className="mt-2 text-2xl font-bold text-black">
-            Esta medición ya se ha guardado
-          </h2>
-          <p className="mt-4 text-black text-center">
-            Desea sobreescribir la medición anterior?
-          </p>
-        </div>
-      </PopupSobreescritura>
+      ></PopupSobreescritura>
     </>
   );
 }
