@@ -9,10 +9,23 @@ type Measurement = {
 };
 
 type DatosEnsayo = {
+  organizacionEnsayo: string; // Organización que realiza el ensayo
+  nombrePersona: string; //Nombre de la persona que realiza el ensayo
+  tipoEnsayo: string; // Ensayo antes de poner en servicio || recurrente || después de reparación
+  organizacionResponsable: string; // Organización responsable
   dispositivo: string; // Dispositivo
-  nombre: string; //Nombre del tecnico que realiza la medicion
+  numeroIdentificacion: string; // Número de identificación del dispositivo
+  tipoDispositivo: string; // Tipo de dispositivo
+  numeroSerie: string; // Número de serie del dispositivo
+  fabricante: string; // Fabricante del dispositivo
+  claseProteccion: string; // Clase de protección del dispositivo
+  tipoParteAplicable: string; // Tipo de parte aplicable: 0 || B || BF || CF
+  conexionRed: string; // Conexión a red: API || CAND || CAD
+  accesorios: string; // Accesorios del dispositivo
   fecha: string;
+
   comentario: string; // Comentario adicional del ensayo
+  inspeccionVisual: string; // Comentario de inspección visual
 };
 
 type DataContextProps = {
@@ -32,10 +45,23 @@ const DataContext = createContext<DataContextProps | undefined>(undefined);
 export const DataProvider = ({ children }: { children: ReactNode }) => {
   const [measurements, setMeasurements] = useState<Measurement[]>([]);
   const [datosEnsayo, setDatosEnsayo] = useState<DatosEnsayo>({
+    organizacionEnsayo: "",
+    nombrePersona: "",
+    tipoEnsayo: "",
+    organizacionResponsable: "",
     dispositivo: "",
-    nombre: "",
+    numeroIdentificacion: "",
+    tipoDispositivo: "",
+    numeroSerie: "",
+    fabricante: "",
+    claseProteccion: "",
+    tipoParteAplicable: "",
+    conexionRed: "",
+    accesorios: "",
     fecha: "",
+
     comentario: "",
+    inspeccionVisual: "", // Comentario de inspección visual
   }); // Estado para almacenar los datos del ensayo
   const [esPrimeraConexion, setEsPrimeraConexion] = useState(true);
 

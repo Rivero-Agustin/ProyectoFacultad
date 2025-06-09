@@ -12,6 +12,7 @@ type SaveMeasurementButtonProps = {
   unit: string; // Unidad de medida
   type: number; // Tipo de medición
   setIsOpen: (isOpen: boolean) => void; // Función para abrir el popup
+  paso: number;
   [key: string]: any; // Para otras props como onClick, id, etc.
 };
 
@@ -20,6 +21,7 @@ export default function SaveMeasurementButton({
   unit,
   type,
   setIsOpen,
+  paso,
   ...props
 }: SaveMeasurementButtonProps) {
   const { addMeasurement, measurements } = useDataContext(); // Función del contexto
@@ -43,7 +45,26 @@ export default function SaveMeasurementButton({
       tipoMedicion = "Resistencia de aislamiento";
       break;
     case 6:
-      tipoMedicion = "Resistencia de tierra de protección";
+      switch (paso) {
+        case 0:
+          tipoMedicion =
+            "Resistencia entre conector de tierra de protección del TOMACORRIENTES y las PARTES CONDUCTORAS ACCESIBLES puestas a tierra";
+          type = 60;
+          break;
+        case 1:
+          tipoMedicion =
+            "Resistencia entre las conexiones de tierra de cada extremo del CORDÓN DE ALIMENTACIÓN";
+          type = 61;
+          break;
+        case 2:
+          tipoMedicion =
+            "Resistencia del CORDÓN DE ALIMENTACIÓN y el APARATO EM juntos";
+          type = 62;
+          break;
+        default:
+          tipoMedicion = "Resistencia de tierra de protección";
+          break;
+      }
       break;
     default:
       tipoMedicion = "Tipo de medición no definido";

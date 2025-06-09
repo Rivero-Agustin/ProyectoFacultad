@@ -9,12 +9,14 @@ type Props = {
   unidad: string;
   setMedicionTerminada: (condicion: boolean) => void;
   type: number;
+  paso: number;
 };
 
 export default function Measurement({
   unidad,
   setMedicionTerminada,
   type,
+  paso,
 }: Props) {
   const [arduinoData, setArduinoData] = useState("");
   const [isOpen, setIsOpen] = useState(false); // Estado para controlar el popup
@@ -66,6 +68,7 @@ export default function Measurement({
           unit={unidad}
           type={type}
           setIsOpen={setIsOpen} // Pasar la función para abrir el popup
+          paso={paso}
         ></SaveMeasurementButton>
       </div>
       {/* <EstructuraMediciones></EstructuraMediciones> */}

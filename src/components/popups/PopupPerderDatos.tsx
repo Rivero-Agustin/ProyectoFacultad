@@ -1,19 +1,30 @@
 // components/Popup.tsx
 "use client";
 import React from "react";
+import { useEffect } from "react";
 import { useDataContext } from "@/context/DataContext";
+
+import Modal from "react-modal";
 import { AppButton } from "../AppButton";
 import { toast } from "sonner";
-import { BaseModal } from "./BaseModal";
+
+// Configurar el elemento raíz para accesibilidad
 
 interface Props {
   isOpen: boolean;
   onRequestClose: () => void;
-  // children?: React.ReactNode; // opcional
+  children?: React.ReactNode;
 }
 
-const PopupPerderDatos = ({ isOpen, onRequestClose }: Props) => {
-  const { clearMeasurements } = useDataContext();
+const PopupPerderDatos = ({ isOpen, onRequestClose, children }: Props) => {
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      Modal.setAppElement(document.body);
+      // Asegura que el modal se vincule correctamente al elemento raíz
+    }
+  }, []);
+
+  const { clearMeasurements } = useDataContext(); // Función del contexto
 
   const handleLimpiarMediciones = () => {
     clearMeasurements(); // Limpia las mediciones almacenadas
@@ -23,27 +34,37 @@ const PopupPerderDatos = ({ isOpen, onRequestClose }: Props) => {
   };
 
   return (
-    <BaseModal
+    <Modal
       isOpen={isOpen}
       onRequestClose={onRequestClose}
       contentLabel="PopUp de perdida de datos"
-      title="Si vuelve atrás se perderan las mediciones ya realizadas"
-      description="Está seguro que desea continuar?"
-      footer={
-        <div className="flex justify-center gap-20 w-full">
-          <AppButton
-            onClick={onRequestClose}
-            variant="buttonRed"
-            className="w-1/4"
-          >
-            Cancelar
-          </AppButton>
-          <AppButton onClick={handleLimpiarMediciones} className="w-1/4">
-            Aceptar
-          </AppButton>
-        </div>
-      }
-    ></BaseModal>
+      style={{
+        content: {
+          top: "50%",
+          left: "50%",
+          right: "auto",
+          bottom: "auto",
+          marginRight: "-50%",
+          transform: "translate(-50%, -50%)",
+          padding: "2rem",
+          borderRadius: "1rem",
+        },
+        overlay: {
+          backgroundColor: "rgba(0, 0, 0, 0.5)",
+        },
+      }}
+    >
+      {children}
+      <div className="flex justify-center gap-4 mt-2">
+        <AppButton
+          onClick={onRequestClose}
+          className="bg-red-500 hover:bg-red-800"
+        >
+          Cancelar
+        </AppButton>
+        <AppButton onClick={handleLimpiarMediciones}>Aceptar</AppButton>
+      </div>
+    </Modal>
   );
 };
 

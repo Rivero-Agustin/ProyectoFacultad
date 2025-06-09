@@ -8,9 +8,14 @@ import { sendToArduino } from "@/utils/arduino";
 type Props = {
   unidad: string;
   sendParam: string;
+  paso?: number;
 };
 
-export default function MeasurementFlowContainer({ unidad, sendParam }: Props) {
+export default function MeasurementFlowContainer({
+  unidad,
+  sendParam,
+  paso = -1,
+}: Props) {
   const [mostrarMedicion, setMostrarMedicion] = useState(false);
   const [medicionTerminada, setMedicionTerminada] = useState(false);
   const [repetir, setRepetir] = useState(false);
@@ -45,6 +50,7 @@ export default function MeasurementFlowContainer({ unidad, sendParam }: Props) {
           unidad={unidad}
           setMedicionTerminada={setMedicionTerminada}
           type={parseInt(sendParam)}
+          paso={paso}
         />
       )}
     </div>

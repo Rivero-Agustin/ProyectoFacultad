@@ -11,7 +11,7 @@ import { formatearFecha } from "@/utils/formatearFecha";
 import PopupPerderDatos from "@/components/popups/PopupPerderDatos";
 import TitleCard from "@/components/TitleCard";
 
-export default function Iniciar() {
+export default function Mediciones() {
   const { measurements, datosEnsayo } = useDataContext(); // Función del contexto
   const { setOnBack } = useBackButton();
   const [showModal, setShowModal] = useState(false);
@@ -45,14 +45,17 @@ export default function Iniciar() {
 
       <div className="grid grid-cols-3 gap-2 mx-2">
         <Card title="Dispositivo" info={datosEnsayo.dispositivo}></Card>
-        <Card title="Técnico laboratorista" info={datosEnsayo.nombre}></Card>
+        <Card
+          title="Técnico laboratorista"
+          info={datosEnsayo.nombrePersona}
+        ></Card>
         <Card title="Fecha" info={formatearFecha(datosEnsayo.fecha)}></Card>
       </div>
       <div className="flex flex-col gap-2">
         <h2 className="text-center mt-2">Seleccione la medición a realizar</h2>
         <div className="grid grid-cols-[1fr_auto] mx-20 gap-y-3">
           <div className="contents">
-            <AppLink className="w-full" href="/iniciar/fugaequipo">
+            <AppLink className="w-full" href="/mediciones/fugaequipo">
               Corriente de fuga del equipo
             </AppLink>
             <MedicionRealizada
@@ -60,7 +63,7 @@ export default function Iniciar() {
             ></MedicionRealizada>
           </div>
           <div className="contents">
-            <AppLink className="w-full" href="/iniciar/fugapartes">
+            <AppLink className="w-full" href="/mediciones/fugapartes">
               Corriente de fuga de partes aplicables
             </AppLink>
             <MedicionRealizada
@@ -68,7 +71,7 @@ export default function Iniciar() {
             ></MedicionRealizada>
           </div>
           <div className="contents">
-            <AppLink className="w-full" href="/iniciar/aislamiento">
+            <AppLink className="w-full" href="/mediciones/aislamiento">
               Resistencia de aislamiento
             </AppLink>
             <MedicionRealizada
@@ -76,7 +79,7 @@ export default function Iniciar() {
             ></MedicionRealizada>
           </div>
           <div className="contents">
-            <AppLink className="w-full" href="/iniciar/tierra">
+            <AppLink className="w-full" href="/mediciones/tierra">
               Resistencia de tierra de protección
             </AppLink>
             <MedicionRealizada
@@ -86,7 +89,7 @@ export default function Iniciar() {
         </div>
         <GeneratePDFButton />
       </div>
-
+      {/* 
       <div className="grid grid-cols-2">
         <div>
           <h1 className="font-bold">
@@ -100,7 +103,7 @@ export default function Iniciar() {
           <p>6: {medicionesRealizadas[6] ? "true" : "false"}</p>
         </div>
         <EstructuraMediciones></EstructuraMediciones>
-      </div>
+      </div> */}
     </>
   );
 }
