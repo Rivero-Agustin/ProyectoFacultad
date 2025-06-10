@@ -57,10 +57,11 @@ const Home = () => {
       fecha,
     } = formData;
 
-    if (!dispositivo || !nombrePersona || !fecha) {
-      setShowModal(true);
-      return;
-    }
+    // COMENTADO PARA DEBUG
+    // if (!dispositivo || !nombrePersona || !fecha) {
+    //   setShowModal(true);
+    //   return;
+    // }
     setDatosEnsayo(formData);
     router.push("/inspeccion");
   };
