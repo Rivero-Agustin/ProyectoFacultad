@@ -97,7 +97,8 @@ const Home = () => {
       claseProteccion: claseProteccion as ClaseProteccion,
       conexionRed: conexionRed as ConexionRed,
     });
-    router.push("/inspeccion");
+    // router.push("/inspeccion");
+    router.push("/mediciones/flujoprueba");
   };
 
   // Efecto para actualizar otros campos si se selecciona "Batería"
