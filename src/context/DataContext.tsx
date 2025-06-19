@@ -8,19 +8,35 @@ type Measurement = {
   indexType: number; // Indice del tipo de medición
 };
 
+export type ClaseProteccion = "Clase I" | "Clase II";
+export type TipoEnsayo =
+  | "Antes de poner en servicio"
+  | "Recurrente"
+  | "Después de la reparación";
+export type TipoAlimentacion =
+  | "Conexion a red"
+  | "Batería"
+  | "Conexión a red y batería";
+export type TipoParteAplicable = "0" | "B" | "BF" | "CF";
+export type ConexionRed =
+  | "Permanentemente instalado"
+  | "Cordón de alimentación no desmontable"
+  | "Cordón de alimentación desconectable";
+
 type DatosEnsayo = {
   organizacionEnsayo: string; // Organización que realiza el ensayo
   nombrePersona: string; //Nombre de la persona que realiza el ensayo
-  tipoEnsayo: string; // Ensayo antes de poner en servicio || recurrente || después de reparación
+  tipoEnsayo: TipoEnsayo;
   organizacionResponsable: string; // Organización responsable
   dispositivo: string; // Dispositivo
   numeroIdentificacion: string; // Número de identificación del dispositivo
   tipoDispositivo: string; // Tipo de dispositivo
   numeroSerie: string; // Número de serie del dispositivo
   fabricante: string; // Fabricante del dispositivo
-  claseProteccion: string; // Clase de protección del dispositivo
-  tipoParteAplicable: string; // Tipo de parte aplicable: 0 || B || BF || CF
-  conexionRed: string; // Conexión a red: API || CAND || CAD
+  tipoAlimentacion: TipoAlimentacion; // Tipo de alimentación del dispositivo: red || Batería || Batería y red
+  claseProteccion: ClaseProteccion; // Clase de protección del dispositivo
+  tipoParteAplicable: TipoParteAplicable; // Tipo de parte aplicable: 0 || B || BF || CF
+  conexionRed: ConexionRed; // Conexión a red: API || CAND || CAD
   accesorios: string; // Accesorios del dispositivo
   fecha: string;
 
@@ -44,19 +60,36 @@ const DataContext = createContext<DataContextProps | undefined>(undefined);
 
 export const DataProvider = ({ children }: { children: ReactNode }) => {
   const [measurements, setMeasurements] = useState<Measurement[]>([]);
-  const [datosEnsayo, setDatosEnsayo] = useState<DatosEnsayo>({
+  // Permite undefined solo en el estado inicial
+  const [datosEnsayo, setDatosEnsayo] = useState<
+    Omit<
+      DatosEnsayo,
+      | "tipoEnsayo"
+      | "claseProteccion"
+      | "tipoAlimentacion"
+      | "tipoParteAplicable"
+      | "conexionRed"
+    > & {
+      tipoEnsayo?: TipoEnsayo;
+      claseProteccion?: ClaseProteccion;
+      tipoAlimentacion?: TipoAlimentacion;
+      tipoParteAplicable?: TipoParteAplicable;
+      conexionRed?: ConexionRed;
+    }
+  >({
     organizacionEnsayo: "",
     nombrePersona: "",
-    tipoEnsayo: "",
+    tipoEnsayo: undefined,
     organizacionResponsable: "",
     dispositivo: "",
     numeroIdentificacion: "",
     tipoDispositivo: "",
     numeroSerie: "",
     fabricante: "",
-    claseProteccion: "",
-    tipoParteAplicable: "",
-    conexionRed: "",
+    tipoAlimentacion: undefined,
+    claseProteccion: undefined,
+    tipoParteAplicable: undefined,
+    conexionRed: undefined,
     accesorios: "",
     fecha: "",
 
@@ -83,7 +116,7 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
         measurements,
         addMeasurement,
         clearMeasurements,
-        datosEnsayo,
+        datosEnsayo: datosEnsayo as DatosEnsayo, // Type assertion, asegúrate de validar antes de usar
         setDatosEnsayo: (datos) =>
           setDatosEnsayo((prev) => ({ ...prev, ...datos })), // Actualiza los datos del ensayo, manteniendo los valores existentes
         // Permite actualizar solo algunos campos de los datos del ensayo
@@ -103,3 +136,30 @@ export const useDataContext = () => {
     throw new Error("useDataContext must be used within a DataProvider");
   return context;
 };
+
+export const OPCIONES_TIPO_ENSAYO: TipoEnsayo[] = [
+  "Antes de poner en servicio",
+  "Recurrente",
+  "Después de la reparación",
+];
+
+export const OPCIONES_CLASE_PROTECCION: ClaseProteccion[] = [
+  "Clase I",
+  "Clase II",
+];
+export const OPCIONES_TIPO_ALIMENTACION: TipoAlimentacion[] = [
+  "Conexion a red",
+  "Batería",
+  "Conexión a red y batería",
+];
+export const OPCIONES_TIPO_PARTE_APLICABLE: TipoParteAplicable[] = [
+  "0",
+  "B",
+  "BF",
+  "CF",
+];
+export const OPCIONES_CONEXION_RED: ConexionRed[] = [
+  "Permanentemente instalado",
+  "Cordón de alimentación no desmontable",
+  "Cordón de alimentación desconectable",
+];

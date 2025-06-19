@@ -23,7 +23,11 @@ export default function Inspeccion() {
     e.preventDefault(); // Evita el comportamiento por defecto del formulario
     setDatosEnsayo({ inspeccionVisual: comment }); // Guarda el valor del comentario
     setComment(""); // Limpia la variable de comentario
-    router.push("/mediciones/tierra"); // Redirige a la página de tierra
+    if (datosEnsayo.tipoAlimentacion === "Batería") {
+      router.push("/mediciones/corrientesfuga");
+    } else {
+      router.push("/mediciones/tierra"); // Redirige a la página de tierra
+    }
   };
 
   return (

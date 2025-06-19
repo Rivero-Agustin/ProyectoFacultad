@@ -26,7 +26,7 @@ export default function PopupSimple({
       title={title}
       description={message}
       footer={
-        <div className="flex justify-center ">
+        <div className="flex justify-center">
           <AppButton onClick={onClose} variant="default">
             Aceptar
           </AppButton>

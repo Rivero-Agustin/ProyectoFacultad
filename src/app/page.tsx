@@ -1,35 +1,51 @@
 "use client"; // Indica que este componente se ejecuta en el cliente
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation"; // Importa el hook useRouter de next/navigation
 // import Button from "@/components/ButtonArduino";
 import { AppButton } from "@/components/AppButton";
-import { useDataContext } from "@/context/DataContext";
+import {
+  useDataContext,
+  OPCIONES_TIPO_ENSAYO,
+  TipoEnsayo,
+  OPCIONES_CLASE_PROTECCION,
+  ClaseProteccion,
+  OPCIONES_TIPO_ALIMENTACION,
+  TipoAlimentacion,
+  OPCIONES_TIPO_PARTE_APLICABLE,
+  TipoParteAplicable,
+  OPCIONES_CONEXION_RED,
+  ConexionRed,
+} from "@/context/DataContext";
 import PopupSimple from "@/components/popups/PopupSimple";
 import AppForm from "@/components/AppForm";
 import AppInput from "@/components/AppInput";
 import AppSelect from "@/components/AppSelect";
+import { set } from "date-fns";
 
 const Home = () => {
-  const { setDatosEnsayo } = useDataContext();
+  const { datosEnsayo, setDatosEnsayo } = useDataContext();
   const [formData, setFormData] = useState({
     organizacionEnsayo: "",
     nombrePersona: "",
-    tipoEnsayo: "",
+    tipoEnsayo: "" as TipoEnsayo | "",
     organizacionResponsable: "",
     dispositivo: "",
     numeroIdentificacion: "",
     tipoDispositivo: "",
     numeroSerie: "",
     fabricante: "",
-    claseProteccion: "",
-    tipoParteAplicable: "",
-    conexionRed: "",
+    tipoAlimentacion: "" as TipoAlimentacion | "",
+    claseProteccion: "" as ClaseProteccion | "",
+    tipoParteAplicable: "" as TipoParteAplicable | "",
+    conexionRed: "" as ConexionRed | "",
     accesorios: "",
     fecha: new Date().toISOString().split("T")[0],
   });
   const router = useRouter();
   const [showModal, setShowModal] = useState(false);
+  const [disabledConexionRed, setDisabledConexionRed] = useState(false);
+  const [disabledClaseProteccion, setDisabledClaseProteccion] = useState(false);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -50,6 +66,7 @@ const Home = () => {
       tipoDispositivo,
       numeroSerie,
       fabricante,
+      tipoAlimentacion,
       claseProteccion,
       tipoParteAplicable,
       conexionRed,
@@ -57,14 +74,53 @@ const Home = () => {
       fecha,
     } = formData;
 
-    // COMENTADO PARA DEBUG
-    // if (!dispositivo || !nombrePersona || !fecha) {
-    //   setShowModal(true);
-    //   return;
-    // }
-    setDatosEnsayo(formData);
+    if (tipoAlimentacion === "Batería") {
+      if (!tipoAlimentacion || !tipoParteAplicable) {
+        setShowModal(true);
+        return;
+      }
+    } else if (
+      !tipoAlimentacion ||
+      !claseProteccion ||
+      !tipoParteAplicable ||
+      !conexionRed
+    ) {
+      setShowModal(true);
+      return;
+    }
+
+    setDatosEnsayo({
+      ...formData,
+      tipoEnsayo: tipoEnsayo as TipoEnsayo,
+      tipoAlimentacion: tipoAlimentacion as TipoAlimentacion,
+      tipoParteAplicable: tipoParteAplicable as TipoParteAplicable,
+      claseProteccion: claseProteccion as ClaseProteccion,
+      conexionRed: conexionRed as ConexionRed,
+    });
     router.push("/inspeccion");
   };
+
+  // Efecto para actualizar otros campos si se selecciona "Batería"
+  useEffect(() => {
+    if (formData.tipoAlimentacion === "Batería") {
+      setFormData((prev) => ({
+        ...prev,
+        conexionRed: "",
+        claseProteccion: "",
+      }));
+      setDisabledConexionRed(true);
+      setDisabledClaseProteccion(true);
+    } else {
+      setDisabledConexionRed(false);
+      setDisabledClaseProteccion(false);
+
+      setFormData((prev) => ({
+        ...prev,
+        claseProteccion: "",
+        conexionRed: "",
+      }));
+    }
+  }, [formData.tipoAlimentacion]);
 
   return (
     <>
@@ -131,13 +187,11 @@ const Home = () => {
             <option value="" disabled hidden className="text-gray-500">
               Seleccione una opción
             </option>
-            <option value="Antes de poner en servicio">
-              Antes de poner en servicio
-            </option>
-            <option value="Recurrente">Recurrente</option>
-            <option value="Después de la reparación">
-              Después de la reparación
-            </option>
+            {OPCIONES_TIPO_ENSAYO.map((op) => (
+              <option key={op} value={op}>
+                {op}
+              </option>
+            ))}
           </AppSelect>
         </div>
 
@@ -164,7 +218,7 @@ const Home = () => {
             placeholder="Número de identificación"
           />
         </div>
-        <div className="col-span-3">
+        <div className="col-span-2">
           <label htmlFor="tipoDispositivo">Tipo de dispositivo</label>
           <AppInput
             type="text"
@@ -175,7 +229,7 @@ const Home = () => {
             placeholder="Tipo de dispositivo"
           />
         </div>
-        <div className="col-span-2">
+        <div className="col-span-1">
           <label htmlFor="numeroSerie">N° de serie</label>
           <AppInput
             type="text"
@@ -187,7 +241,7 @@ const Home = () => {
           />
         </div>
 
-        <div className="col-span-3">
+        <div className="col-span-2">
           <label htmlFor="fabricante">Fabricante</label>
           <AppInput
             type="text"
@@ -200,19 +254,41 @@ const Home = () => {
         </div>
 
         <div className="col-span-2">
+          <label htmlFor="claseProteccion">Tipo de Alimentación</label>
+          <AppSelect
+            name="tipoAlimentacion"
+            id="tipoAlimentacion"
+            value={formData.tipoAlimentacion}
+            onChange={handleChange}
+          >
+            <option value="" disabled hidden className="text-gray-500">
+              Seleccione una opción
+            </option>
+            {OPCIONES_TIPO_ALIMENTACION.map((op) => (
+              <option key={op} value={op}>
+                {op}
+              </option>
+            ))}
+          </AppSelect>
+        </div>
+
+        <div className="col-span-3">
           <label htmlFor="claseProteccion">Clase de protección</label>
           <AppSelect
             name="claseProteccion"
             id="claseProteccion"
             value={formData.claseProteccion}
             onChange={handleChange}
+            disabled={disabledClaseProteccion}
           >
             <option value="" disabled hidden className="text-gray-500">
               Seleccione una opción
             </option>
-            <option value="Clase I">Clase I</option>
-            <option value="Clase II">Clase II</option>
-            <option value="Batería">Batería</option>
+            {OPCIONES_CLASE_PROTECCION.map((op) => (
+              <option key={op} value={op}>
+                {op}
+              </option>
+            ))}
           </AppSelect>
         </div>
 
@@ -227,10 +303,11 @@ const Home = () => {
             <option value="" disabled hidden className="text-gray-500">
               Seleccione una opción
             </option>
-            <option value="0">0</option>
-            <option value="B">B</option>
-            <option value="BF">BF</option>
-            <option value="CF">CF</option>
+            {OPCIONES_TIPO_PARTE_APLICABLE.map((op) => (
+              <option key={op} value={op}>
+                {op}
+              </option>
+            ))}
           </AppSelect>
         </div>
 
@@ -241,19 +318,16 @@ const Home = () => {
             id="conexionRed"
             value={formData.conexionRed}
             onChange={handleChange}
+            disabled={disabledConexionRed}
           >
             <option value="" disabled hidden className="text-gray-500">
               Seleccione una opción
             </option>
-            <option value="Permanentemente instalado">
-              Permanentemente instalado
-            </option>
-            <option value="Cordón de alimentación no desmontable">
-              Cordón de alimentación no desmontable
-            </option>
-            <option value="Cordón de alimentación desconectable">
-              Cordón de alimentación desconectable
-            </option>
+            {OPCIONES_CONEXION_RED.map((op) => (
+              <option key={op} value={op}>
+                {op}
+              </option>
+            ))}
           </AppSelect>
         </div>
 

@@ -36,6 +36,7 @@
     --primary-light: #60a5fa;
     --primary-cardlayout: theme("colors.blue.950");
     --primary-titlecard: theme("colors.blue.900");
+    --primary-subtitlecard: theme("colors.sky.900");
     --primary-button: theme("colors.sky.700");
     --primary-button-hover: theme("colors.sky.900");
     --primary-fondos: theme("colors.blue.300");

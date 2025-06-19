@@ -43,6 +43,45 @@ export default function SaveMeasurementButton({
       break;
     case 5:
       tipoMedicion = "Resistencia de aislamiento";
+      switch (paso) {
+        case 1:
+          tipoMedicion =
+            "Resistencia entre la PARTE ALIMENTADA DESDE LA RED y la TIERRA DE PROTECCIÓN";
+          type = 51;
+          break;
+        case 2:
+          tipoMedicion =
+            "Resistencia entre la PARTE ALIMENTADA DESDE LA RED y PARTES CONDUCTORAS ACCESIBLES (no puestas a tierra)";
+          type = 52;
+          break;
+        case 3:
+          tipoMedicion =
+            "Resistencia entre la PARTE ALIMENTADA DESDE LA RED y las PARTES APLICABLES con todas las PARTES APLICABLES DEL TIPO B a ensayar conectadas juntas";
+          type = 53;
+          break;
+        case 4:
+          tipoMedicion =
+            "Resistencia entre la PARTE ALIMENTADA DESDE LA RED y las PARTES APLICABLES con todas las PARTES APLICABLES DEL TIPO F a ensayar conectadas juntas";
+          type = 54;
+          break;
+        case 5:
+          tipoMedicion =
+            "Resistencia entre las PARTES APLICABLES DEL TIPO F que hacen una conexión al paciente y la TIERRA DE PROTECCIÓN";
+          type = 55;
+          break;
+        case 6:
+          tipoMedicion =
+            "Resistencia entre las PARTES APLICABLES DEL TIPO F que hacen una conexión al paciente y las PARTES CONDUCTORAS ACCESIBLES (que no están puestas a tierra)";
+          type = 56;
+          break;
+        case 7:
+          tipoMedicion =
+            "Resistencia entre las PARTES APLICABLES DEL TIPO F y la TIERRA FUNCIONAL";
+          type = 57;
+          break;
+        default:
+          tipoMedicion = "Resistencia de aislamiento";
+      }
       break;
     case 6:
       switch (paso) {

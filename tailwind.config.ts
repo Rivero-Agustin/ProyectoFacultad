@@ -15,6 +15,7 @@ export default {
         "primary-light": "var(--primary-light)",
         "primary-cardlayout": "var(--primary-cardlayout)",
         "primary-titlecard": "var(--primary-titlecard)",
+        "primary-subtitlecard": "var(--primary-subtitlecard)",
         "primary-button": "var(--primary-button)",
         "primary-button-hover": "var(--primary-button-hover)",
         "primary-fondos": "var(--primary-fondos)",
