@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 import { useDataContext } from "@/context/DataContext";
 import { AppButton } from "@/components/AppButton";
 import { useRouter } from "next/navigation"; // Importa el hook useRouter de next/navigation
+import Figura from "@/components/Figura";
 
 export default function Aislamiento() {
   const { datosEnsayo } = useDataContext();
@@ -123,7 +124,9 @@ export default function Aislamiento() {
             El valor de la medición debe ser mayor o igual a {valorLimite}.
           </Parrafo>
 
-          <div
+          <Figura figura={figura} />
+
+          {/* <div
             className="relative mx-auto my-4"
             style={{ width: 500, height: 200 }}
           >
@@ -134,7 +137,7 @@ export default function Aislamiento() {
               style={{ objectFit: "contain" }}
               className="flex"
             />
-          </div>
+          </div> */}
         </>
       )}
 

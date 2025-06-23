@@ -1,18 +1,44 @@
-import { createMachine } from "xstate"; // flowMachine.ts
+import { createMachine, assign } from "xstate"; // flowMachine.ts
+
+type TipoAlimentacion = "Permanentemente Instalado" | "Red" | "Bateria";
+
+interface ContextoEnsayo {
+  tipoAlimentacion: TipoAlimentacion;
+}
+
+type Evento =
+  | { type: "INICIAR" }
+  | { type: "SET_TIPO_ALIMENTACION"; value: TipoAlimentacion };
 
 export const flowMachine = createMachine({
   id: "wizardFlow",
   initial: "inicio",
+  context: {
+    tipoAlimentacion: "" as "Permanentemente Instalado" | "Bateria" | "",
+  },
   states: {
     inicio: {
-      on: { SIGUIENTE: "alimentacionAparato" },
+      on: {
+        SET_TIPO_ALIMENTACION: {
+          actions: assign({
+            tipoAlimentacion: (_, event) => event.value,
+          }),
+          target: "alimentacionAparato",
+        },
+      },
     },
     alimentacionAparato: {
-      on: {
-        PermanentementeInstalado: "claseMed1",
-        Bateria: "figura11",
-        Red: "aislarTierraAparato",
-      },
+      always: [
+        {
+          target: "caseMed1",
+          cond: (context) =>
+            context.tipoAlimentacion === "Permanentemente Instalado",
+        },
+        {
+          target: "figura11",
+          cond: (context) => context.tipoAlimentacion === "Bateria",
+        },
+      ],
     },
     claseMed1: {
       on: {
