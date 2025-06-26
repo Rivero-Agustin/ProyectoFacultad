@@ -101,7 +101,8 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
   // Función para agregar una nueva medición al array
   const addMeasurement = (measurement: Measurement) => {
     setMeasurements(
-      (prev) => [...prev, measurement].sort((a, b) => a.indexType - b.indexType) // Ordena las mediciones por el índice del tipo de medición
+      (prev) => [...prev, measurement]
+      //.sort((a, b) => a.indexType - b.indexType) // Ordena las mediciones por el índice del tipo de medición
     );
   };
 

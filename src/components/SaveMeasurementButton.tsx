@@ -13,6 +13,7 @@ type SaveMeasurementButtonProps = {
   type: number; // Tipo de medición
   setIsOpen: (isOpen: boolean) => void; // Función para abrir el popup
   paso: number;
+  disabledSave?: boolean;
   [key: string]: any; // Para otras props como onClick, id, etc.
 };
 
@@ -22,6 +23,7 @@ export default function SaveMeasurementButton({
   type,
   setIsOpen,
   paso,
+  disabledSave,
   ...props
 }: SaveMeasurementButtonProps) {
   const { addMeasurement, measurements } = useDataContext(); // Función del contexto
@@ -131,7 +133,12 @@ export default function SaveMeasurementButton({
 
   return (
     <>
-      <AppButton variant="saveButton" onClick={handleAddMeasurement} {...props}>
+      <AppButton
+        variant="saveButton"
+        onClick={handleAddMeasurement}
+        disabled={disabledSave}
+        {...props}
+      >
         Guardar
       </AppButton>
     </>

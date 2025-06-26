@@ -9,12 +9,14 @@ type Props = {
   unidad: string;
   sendParam: string;
   paso?: number;
+  disabledSave?: boolean;
 };
 
 export default function MeasurementFlowContainer({
   unidad,
   sendParam,
   paso = -1,
+  disabledSave = false,
 }: Props) {
   const [mostrarMedicion, setMostrarMedicion] = useState(false);
   const [medicionTerminada, setMedicionTerminada] = useState(false);
@@ -51,6 +53,7 @@ export default function MeasurementFlowContainer({
           setMedicionTerminada={setMedicionTerminada}
           type={parseInt(sendParam)}
           paso={paso}
+          disabledSave={disabledSave}
         />
       )}
     </div>

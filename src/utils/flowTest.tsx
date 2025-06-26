@@ -99,12 +99,23 @@ export const flujoEnsayoMachine = createMachine({
     figura6b: {
       on: { SIGUIENTE: "mayor1mA" },
     },
-    mayor1mA: {},
+    mayor1mA: {
+      on: {
+        SI: "aparatoDirecto",
+        NO: "fin",
+      },
+    },
     figura7a: {
-      on: { SIGUIENTE: "fin" },
+      on: { SIGUIENTE: "repetirFicha" },
     },
     figura7b: {
-      on: { SIGUIENTE: "fin" },
+      on: { SIGUIENTE: "repetirFicha" },
+    },
+    repetirFicha: {
+      on: {
+        SI: "aparatoDirecto",
+        NO: "fin",
+      },
     },
     fin: {
       type: "final",

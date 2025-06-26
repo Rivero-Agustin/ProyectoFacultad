@@ -5,7 +5,7 @@ import TitleCard from "@/components/TitleCard";
 export default function FlujoPrueba() {
   return (
     <>
-      <TitleCard title="Hola"></TitleCard>
+      <TitleCard title="Corrientes de Fuga"></TitleCard>
       <WizardFlowTest></WizardFlowTest>
     </>
   );
