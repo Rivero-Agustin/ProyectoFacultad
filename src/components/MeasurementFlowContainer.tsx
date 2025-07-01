@@ -10,6 +10,8 @@ type Props = {
   sendParam: string;
   paso?: number;
   disabledSave?: boolean;
+  onGuardar?: () => void; // <- nueva prop
+  textoFicha?: string;
 };
 
 export default function MeasurementFlowContainer({
@@ -17,6 +19,8 @@ export default function MeasurementFlowContainer({
   sendParam,
   paso = -1,
   disabledSave = false,
+  onGuardar,
+  textoFicha,
 }: Props) {
   const [mostrarMedicion, setMostrarMedicion] = useState(false);
   const [medicionTerminada, setMedicionTerminada] = useState(false);
@@ -31,6 +35,13 @@ export default function MeasurementFlowContainer({
       setMedicionTerminada(false); // Dejarlo listo para la próxima medición
     }
   }, [medicionTerminada]);
+
+  //Resetea el flujo al cambiar de medicion
+  useEffect(() => {
+    setRepetir(false);
+    setDeshabilitado(false);
+    setMostrarMedicion(false);
+  }, [sendParam]);
 
   return (
     <div className="flex flex-col items-center gap-1">
@@ -54,6 +65,8 @@ export default function MeasurementFlowContainer({
           type={parseInt(sendParam)}
           paso={paso}
           disabledSave={disabledSave}
+          onGuardar={onGuardar}
+          textoFicha={textoFicha}
         />
       )}
     </div>

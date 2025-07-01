@@ -14,6 +14,10 @@ type SaveMeasurementButtonProps = {
   setIsOpen: (isOpen: boolean) => void; // Función para abrir el popup
   paso: number;
   disabledSave?: boolean;
+  onGuardar?: () => void;
+  textoFicha?: string;
+  setSobreescribirFichaIsOpen?: (sobreEscribirFichaIsOpen: boolean) => void;
+  setNoSobreescribirFichaIsOpen?: (sobreEscribirFichaIsOpen: boolean) => void;
   [key: string]: any; // Para otras props como onClick, id, etc.
 };
 
@@ -24,21 +28,60 @@ export default function SaveMeasurementButton({
   setIsOpen,
   paso,
   disabledSave,
+  onGuardar,
+  textoFicha,
+  setSobreescribirFichaIsOpen,
+  setNoSobreescribirFichaIsOpen,
   ...props
 }: SaveMeasurementButtonProps) {
   const { addMeasurement, measurements } = useDataContext(); // Función del contexto
+  const value = parseFloat(saveValue); //Convierte el valor ingresado en numero
+  let sobreescribirFicha = false;
 
   let tipoMedicion;
+  //Se busca el mayor indice entre 30 y 39 (fuga partes directo)
+  let maxIndexType = measurements
+    .map((obj) => obj.indexType)
+    .filter(
+      (indexType) =>
+        typeof indexType === "number" && indexType >= 31 && indexType <= 39
+    )
+    .reduce((max, curr) => Math.max(max, curr), -Infinity);
 
   switch (type) {
     case 1:
-      tipoMedicion = "Corriente de fuga del equipo - Método directo";
+      if (textoFicha) {
+        tipoMedicion = `Corriente de fuga del equipo - Método directo - Ficha: ${textoFicha}`;
+
+        //Si el valor ya guardado es MAYOR que el nuevo, no hay que sobreescribirlo
+        if (measurements.some((m) => m.indexType === 1 && m.value > value)) {
+          sobreescribirFicha = false;
+        } else {
+          sobreescribirFicha = true;
+        }
+      } else {
+        tipoMedicion = "Corriente de fuga del equipo - Método directo";
+      }
+
       break;
+
     case 2:
       tipoMedicion = "Corriente de fuga del equipo - Método alternativo";
       break;
     case 3:
-      tipoMedicion = "Corriente de partes aplicables - Método directo";
+      if (textoFicha) {
+        tipoMedicion = `Corriente de fuga de partes aplicables - Método directo - Ficha: ${textoFicha}`;
+      } else {
+        tipoMedicion =
+          "Corriente de fuga de partes aplicables - Método directo";
+      }
+
+      //Logica para incrementar los indices y guardar mas de una medicion para distintas posiciones
+      if (maxIndexType === -Infinity) {
+        type = 31;
+      } else {
+        type = maxIndexType + 1;
+      }
       break;
     case 4:
       tipoMedicion = "Corriente de partes aplicables - Método alternativo";
@@ -113,11 +156,21 @@ export default function SaveMeasurementButton({
   }
 
   const handleAddMeasurement = () => {
-    const value = parseFloat(saveValue); //Convierte el valor ingresado en numero
-
+    //Si la medicion se repite
     if (measurements.some((e) => e.indexType == type)) {
-      setIsOpen(true); // Abre el popup si la medicion ya se ha guardado
+      //Abre el popup de sobreescritura normal para las mediciones != a la 1
+      if (type !== 1) {
+        setIsOpen(true); // Abre el popup de sobreescritura si la medicion ya se ha guardado
+      } else {
+        // Para la medicion 1, segun si hay que sobreescribir abre los respectivos popup
+        if (sobreescribirFicha) {
+          setSobreescribirFichaIsOpen?.(true);
+        } else {
+          setNoSobreescribirFichaIsOpen?.(true);
+        }
+      }
     } else {
+      //Si la medicion no esta repetida se guarda normalmente
       if (!isNaN(value)) {
         addMeasurement({
           // Agregar la medición al contexto
@@ -129,6 +182,7 @@ export default function SaveMeasurementButton({
         toast.success("Medición guardada correctamente"); // Notificacion de éxito
       }
     }
+    onGuardar?.(); //Ejecuta el callback al presionar guardar
   };
 
   return (

@@ -42,6 +42,10 @@ export default function WizardFlowTest() {
     setPosicionFicha(e.target.value);
   };
 
+  const handleMedicionGuardada = () => {
+    setDisabledNext(false); // Habilita el botón Siguiente
+  };
+
   useEffect(() => {
     send({ type: "SET_CLASE_PROTECCION", value: datosEnsayo.claseProteccion });
     const tipo = datosEnsayo.tipoAlimentacion;
@@ -124,6 +128,7 @@ export default function WizardFlowTest() {
       }
     }
     if (state.matches("figura7a") || state.matches("figura7b")) {
+      setDisabledSave(true);
       setPosicionFicha("");
       setFiguraON(true);
       setMedicionON(true);
@@ -135,41 +140,18 @@ export default function WizardFlowTest() {
       state.matches("figura7b") && setFigura("Figura 7-b.JPG");
     }
     if (state.matches("repetirFicha")) {
-      console.log(measurements);
       setShowPopupRepetirFicha(true);
       setMedicionON(false);
       setFiguraON(false);
     }
-
-    //HABILITACION DE SIGUIENTE SOLO DSP DE REALIZAR LA MEDICION
-
-    //EL PROXIMO PASO ES MANEJAR LAS MEDICIONES QUE SE GUARDAN,
-    // POR EJEMPLO, GUARDAR SOLO LA MEDICION MÁS ALTA DE LAS DISTINTAS POSICIONES DE LA FICHA DE RED, ETC
   }, [state, measurements]);
 
   useEffect(() => {
-    if (isFirstRender1.current) {
-      // Evita ejecutar la lógica en el primer render
-      isFirstRender1.current = false;
-      return;
-    }
-    // setDisabledNext(false);
-    console.log(measurements);
-  }, [measurements]);
-
-  useEffect(() => {
-    if (isFirstRender2.current) {
-      // Evita ejecutar la lógica en el primer render
-      isFirstRender2.current = false;
-      return;
-    }
     if (state.matches("figura7a") || state.matches("figura7b")) {
       if (posicionFicha === "") {
         setDisabledSave(true);
-        setDisabledNext(true);
       } else {
         setDisabledSave(false);
-        // setDisabledNext(false);
       }
     }
   }, [posicionFicha]);
@@ -210,6 +192,8 @@ export default function WizardFlowTest() {
           unidad={unidad}
           sendParam={sendParam}
           disabledSave={disabledSave}
+          onGuardar={handleMedicionGuardada}
+          textoFicha={posicionFicha}
         ></MeasurementFlowContainer>
       )}
 
@@ -265,7 +249,11 @@ export default function WizardFlowTest() {
 
       {!state.matches("fin") && (
         <AppButton
-          onClick={() => send({ type: "SIGUIENTE" })}
+          onClick={() => {
+            send({ type: "SIGUIENTE" });
+            setDisabledNext(true);
+            console.log(measurements);
+          }}
           disabled={disabledNext}
         >
           Siguiente
